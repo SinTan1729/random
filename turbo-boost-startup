@@ -1,0 +1,6 @@
+# This simply triggers the turbo-boost script at startup.
+# I use it as a startup script.
+
+#!/bin/bash
+
+~/.local/bin/turbo-boost disable

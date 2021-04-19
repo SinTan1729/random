@@ -1,0 +1,7 @@
+# I use it to clean up latex build files from a directory after I'm done with the project.
+
+#!/bin/bash
+
+[ 0 -lt $(ls *.tex 2>/dev/null | wc -w) ] && find . -maxdepth 1 -type f -regex ".*\.\(aux\|log\|synctex.gz\|bbl\|blg\)" -exec totrash {} \;
+echo "Done!"
+

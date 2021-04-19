@@ -1,0 +1,10 @@
+# Toggles bluetooth on a Linux system. Make sure that you have bluetoothctl installed.
+# I use it with a shortcut.
+
+#!/bin/bash
+
+if [ $(bluetoothctl show "A0:AF:BD:4F:D8:63" | grep Powered | grep -c yes) -eq 1 ]; then
+	bluetoothctl power off
+else
+	bluetoothctl power on
+fi

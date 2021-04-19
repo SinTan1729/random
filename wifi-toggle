@@ -1,0 +1,10 @@
+# Toggles WiFi on a Linux system. Make sure that you have nmcli installed.
+# I use it with a shortcut.
+
+#!/bin/bash
+
+if [ $(nmcli r wifi | grep -c enabled) -eq 1 ]; then
+	nmcli r wifi off
+else
+	nmcli r wifi on
+fi

@@ -1,0 +1,6 @@
+# It simply moves files to trash:/ in KDE
+
+#!/bin/bash
+
+# Move files to trash:/
+kioclient5 move "$@" trash:/
