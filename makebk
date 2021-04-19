@@ -1,0 +1,9 @@
+# This simply makes a backup of a file as filename.bak
+
+#!/bin/bash
+
+if [[ -n "$1" ]];
+then
+	cp "$1"{,.bak}
+fi
+

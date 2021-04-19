@@ -1,0 +1,5 @@
+# It makes the parent folders (if needed) while touch-ing.
+
+#!/bin/bash
+mkdir -p "$(dirname "$1")" &&
+    touch "$1"
