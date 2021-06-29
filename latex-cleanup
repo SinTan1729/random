@@ -2,6 +2,14 @@
 
 #!/bin/bash
 
-[ 0 -lt $(ls *.tex 2>/dev/null | wc -w) ] && find . -maxdepth 1 -type f -regex ".*\.\(aux\|log\|synctex.gz\|bbl\|blg\)" -exec totrash {} \;
+for f in *.tex; do
+    h=$(basename "$f" .tex)
+    echo "Trashing files accompanying $h.tex..."
+    for g in "$h".*; do
+        if [[ ${g: -4} != ".tex" && ${g: -4} != ".pdf" ]] ; then
+            echo "Trashing $g..."
+            totrash "$g"
+        fi
+    done
+done
 echo "Done!"
-
