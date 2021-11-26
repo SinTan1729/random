@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Steps for setting up the drivers of Huion Inspiroy H640P
 
