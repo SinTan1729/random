@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# If started as root, then re-start as user "gavenkoa":
+if [ "$(id -u)" -eq 0 ]; then
+	    exec sudo -H -u <user> $0 "$@"
+fi
+
+function notify-send2() {
+    #Detect the name of the display in use
+    local display=":$(ls /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"
+
+    #Detect the user using such display
+    local user=$(who | grep '('$display')' | awk '{print $1}' | head -n 1)
+
+    #Detect the id of the user
+    local uid=$(id -u $user)
+
+    sudo -u $user DISPLAY=$display DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$uid/bus notify-send -a rclone -h string:desktop-entry:alacritty "$@"
+}
+
+notify-send2 "PhotoPrism autoindex" "Indexing started..."
+sudo /usr/bin/docker exec -it photoprism_photoprism_1 /photoprism/bin/photoprism index
+notify-send2 "PhotoPrism autoindex" "Indexing finished..."
