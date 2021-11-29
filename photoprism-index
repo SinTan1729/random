@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd <photoprism-folder-location>
+docker-compose exec -T photoprism photoprism index
