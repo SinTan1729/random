@@ -4,7 +4,7 @@
 
 # git clone https://github.com/Huion-Linux/DIGImend-kernel-drivers-for-Huion
 # cd DIGImend-kernel-drivers-for-Huion
-# sed -i 's/SUBDIRS=/M=/' Makefile
+# sed -i 's/SUBDIRS=/M=/' Makefile (only for arch or related)
 # sudo make dkms_install
 
 # Make /etc/udev/rules.d/00-usb-huion.rules with this content (to run it whenever the tabler is conencted):
@@ -15,7 +15,7 @@
 # <location-of-this-script> & exit
 
 # Make sure to install xf86-input-wacom (might have to restart)
-# Add this script to autostart
+# Add this script to autostart of your DE or .profile or somehow make it run at boot (so that it works in case the tablet is connected at boot)
 
 sleep 1
 
