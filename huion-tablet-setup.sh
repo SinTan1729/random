@@ -8,7 +8,7 @@
 # sudo make dkms_install
 
 # Make /etc/udev/rules.d/00-usb-huion.rules with this content (to run it whenever the tabler is conencted):
-# ACTION=="add", ATTRS{idVendor}=="256c", ATTRS{idProduct}=="006d", ENV{XAUTHORITY}="/home/<user>/.Xauthority", ENV{DISPLAY}=":0", OWNER=<user>, RUN+="/usr/local/bin/huion-tablet-mount"
+# ACTION=="add", ATTRS{idVendor}=="256c", ATTRS{idProduct}=="006d", ENV{XAUTHORITY}="/home/sintan/.Xauthority", ENV{DISPLAY}=":0", OWNER=<user>, RUN+="/usr/local/bin/huion-tablet-mount"
 
 # Make /usr/local/bin/huion-tablet-mount with this content :
 # #!/bin/bash
@@ -19,7 +19,7 @@
 
 sleep 1
 
-xsetwacom --set 'HID 256c:006d Pen stylus' Button 2 "1"
+xsetwacom --set 'HID 256c:006d Pen stylus' Button 2 "2"
 xsetwacom --set 'HID 256c:006d Pen stylus' Button 3 "3"
 xsetwacom --set 'HID 256c:006d Pad pad' Button 1 "key +ctrl +s -s -ctrl"
 xsetwacom --set 'HID 256c:006d Pad pad' Button 2 "key +ctrl +e -e -ctrl"
