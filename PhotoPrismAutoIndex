@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# To be used as a cron job
-
-echo `date` "| Updating index..." | tee -a logfile
-<location-of-photoprism-index-script>
-echo `date` "| Done!" | tee -a logfile
