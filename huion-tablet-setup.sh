@@ -19,11 +19,11 @@
 
 sleep 1
 
-xsetwacom --set 'HID 256c:006d Pen stylus' Button 2 "2"
-xsetwacom --set 'HID 256c:006d Pen stylus' Button 3 "3"
-xsetwacom --set 'HID 256c:006d Pad pad' Button 1 "key +ctrl +s -s -ctrl"
-xsetwacom --set 'HID 256c:006d Pad pad' Button 2 "key +ctrl +e -e -ctrl"
-xsetwacom --set 'HID 256c:006d Pad pad' Button 3 "4"
-xsetwacom --set 'HID 256c:006d Pad pad' Button 8 "5"
-xsetwacom --set 'HID 256c:006d Pad pad' Button 9 "key +ctrl +z -z -ctrl"
-xsetwacom --set 'HID 256c:006d Pad pad' Button 10 "key +ctrl +y -y -ctrl"
+xsetwacom --set 'HID 256c:006d Pen stylus' Button 2 "2" # middle mouse button
+xsetwacom --set 'HID 256c:006d Pen stylus' Button 3 "3" # right mouse button
+xsetwacom --set 'HID 256c:006d Pad pad' Button 1 "key +ctrl +s -s -ctrl" # save
+xsetwacom --set 'HID 256c:006d Pad pad' Button 2 "key +alt +c -c -alt" # cycle colors in xournal++
+xsetwacom --set 'HID 256c:006d Pad pad' Button 3 "4" # scroll up
+xsetwacom --set 'HID 256c:006d Pad pad' Button 8 "5" # scroll down
+xsetwacom --set 'HID 256c:006d Pad pad' Button 9 "key +ctrl +z -z -ctrl" # undo
+xsetwacom --set 'HID 256c:006d Pad pad' Button 10 "key +ctrl +y -y -ctrl" # redo
