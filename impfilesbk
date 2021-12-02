@@ -1,15 +1,21 @@
 #!/bin/bash
 
-# This is to backup some important stuff
+# This script backs up some important stuff
 
 echo `date` "| Backing up Documents..." | tee -a logfile
-rsync -aAXH --delete source dest
-echo "Done!" | tee -a logfile
+rsync -aAXH --delete --stats src dest | tee -a logfile
+echo $'\n'`date` "| Done!" | tee -a logfile
+
+echo "----------" | tee -a logfile
 
 echo `date` "| Backing up Academics..." | tee -a logfile
-rsync -aAXH --delete source dest
-echo "Done!" | tee -a logfile
+rsync -aAXH --delete --stats src dest | tee -a logfile
+echo $'\n'`date` "| Done!" | tee -a logfile
+
+echo "----------" | tee -a logfile
 
 echo `date` "| Backing up Pictures..." | tee -a logfile
-rsync -aAXH --delete source dest
-echo "Done!" | tee -a logfile
+rsync -aAXH --delete --stats src dest | tee -a logfile
+echo $'\n'`date` "| Done!" | tee -a logfile
+
+echo $'\n'"--------------------------------------------------" | tee -a logfile
