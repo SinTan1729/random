@@ -3,7 +3,7 @@
 
 #!/bin/bash
 
-if [ $(bluetoothctl show "A0:AF:BD:4F:D8:63" | grep Powered | grep -c yes) -eq 1 ]; then
+if [ $(bluetoothctl show | grep Powered | grep -c yes) -eq 1 ]; then
 	bluetoothctl power off
 else
 	bluetoothctl power on
