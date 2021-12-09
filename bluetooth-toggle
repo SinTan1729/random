@@ -6,5 +6,8 @@
 if [ $(bluetoothctl show | grep Powered | grep -c yes) -eq 1 ]; then
 	bluetoothctl power off
 else
+	if [ $(rfkill --output-all | grep bluetooth | grep -c blocked) -ne 0 ]; then
+		rfkill unblock bluetooth
+	fi
 	bluetoothctl power on
 fi
