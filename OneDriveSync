@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ $(id -u) -eq 0 ]; then
 	exec sudo -H -u <user> $0 "$@"

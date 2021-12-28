@@ -1,6 +1,6 @@
 # This is to toggle intel turbo boost.
 
-#!/bin/bash
+#!/bin/sh
 
 if [[ -z $(which rdmsr) ]]; then
     echo "msr-tools is not installed. Run 'sudo apt-get install msr-tools' to install it." >&2

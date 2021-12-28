@@ -1,6 +1,6 @@
 # I use it to clean up latex build files from a directory after I'm done with the project.
 
-#!/bin/bash
+#!/bin/sh
 
 for f in *.tex; do
     h=$(basename "$f" .tex)
