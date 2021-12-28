@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Steps for setting up the drivers of Huion Inspiroy H640P
 
@@ -11,7 +11,7 @@
 # ACTION=="add", ATTRS{idVendor}=="256c", ATTRS{idProduct}=="006d", ENV{XAUTHORITY}="/home/sintan/.Xauthority", ENV{DISPLAY}=":0", OWNER=<user>, RUN+="/usr/local/bin/huion-tablet-mount"
 
 # Make /usr/local/bin/huion-tablet-mount with this content :
-# #!/bin/bash
+# #!/bin/sh
 # <location-of-this-script> & exit
 
 # Make sure to install xf86-input-wacom (might have to restart)
