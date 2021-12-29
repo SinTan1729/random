@@ -3,13 +3,16 @@
 #!/bin/sh
 
 for f in *.tex; do
-    h=$(basename "$f" .tex)
-    echo "Trashing files accompanying $h.tex..."
-    for g in "$h".*; do
-        if [[ ${g: -4} != ".tex" && ${g: -4} != ".pdf" ]] ; then
-            echo "Trashing $g..."
-            totrash "$g"
-        fi
-    done
+    if [ -f "$f" ]; then
+        h=$(basename "$f" .tex)
+        echo "Trashing files accompanying $h.tex..."
+        for g in "$h".*; do
+            k=$( echo $g | sed 's/^.*\.//')
+            if [ "$k" != "tex" ] && [ "$k" != "pdf" ] && [ "$k" != "bib" ] ; then
+                echo "Trashing $g..."
+                totrash "$g"
+            fi
+        done
+    fi
 done
 echo "Done!"
