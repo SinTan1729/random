@@ -2,6 +2,8 @@
 
 #!/bin/sh
 
+# Depends on trash-cli
+
 for f in *.tex; do
     if [ -f "$f" ]; then
         h=$(basename "$f" .tex)
@@ -10,7 +12,7 @@ for f in *.tex; do
             k=$( echo $g | sed 's/^.*\.//')
             if [ "$k" != "tex" ] && [ "$k" != "pdf" ] && [ "$k" != "bib" ] ; then
                 echo "Trashing $g..."
-                totrash "$g"
+                trash "$g"
             fi
         done
     fi
