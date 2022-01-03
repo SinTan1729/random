@@ -1,6 +1,7 @@
-# It simply moves files to trash:/ in KDE
-
 #!/bin/sh
+
+# It simply moves files to trash:/ in KDE
+# I mostly use trash-cli now, but hey, it works!
 
 # Move files to trash:/
 kioclient5 move "$@" trash:/

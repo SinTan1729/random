@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# For syncing some files with OneDrive
+# Assumes that the sync target is set up as OneDrive:Syncs in rclone
+
 if [ $(id -u) -eq 0 ]; then
 	exec sudo -H -u <user> $0 "$@"
 fi
