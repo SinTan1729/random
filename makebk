@@ -1,6 +1,6 @@
-# This simply makes a backup of a file as filename.bak
-
 #!/bin/sh
+
+# This simply makes a backup of a file as filename.bak
 
 if [[ -n "$1" ]];
 then

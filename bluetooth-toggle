@@ -1,7 +1,7 @@
+#!/bin/sh
+
 # Toggles bluetooth on a Linux system. Make sure that you have bluetoothctl installed.
 # I use it with a shortcut.
-
-#!/bin/sh
 
 if [ $(bluetoothctl show | grep Powered | grep -c yes) -eq 1 ]; then
 	bluetoothctl power off

@@ -1,6 +1,6 @@
-# I use it to clean up latex build files from a directory after I'm done with the project.
-
 #!/bin/sh
+
+# I use it to clean up latex build files from a directory after I'm done with the project.
 
 # Depends on trash-cli
 

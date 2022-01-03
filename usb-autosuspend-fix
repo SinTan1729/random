@@ -1,6 +1,6 @@
-# This was to fix an issue where tlp was autosuspending usb ports at startup.
-
 #!/bin/sh
+
+# This was to fix an issue where tlp was autosuspending usb ports at startup.
 
 echo 'on' > '/sys/bus/usb/devices/1-1/power/control'
 echo 'on' > '/sys/bus/usb/devices/1-2/power/control'
