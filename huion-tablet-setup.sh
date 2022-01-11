@@ -17,6 +17,11 @@
 # Make sure to install xf86-input-wacom (might have to restart)
 # Add this script to autostart of your DE or .profile or somehow make it run at boot (so that it works in case the tablet is connected at boot)
 
+if [ $(xsetwacom --list | grep -c "HID 256c:006d") -ne "2" ]; then
+	echo "No supported devices found!"
+	exit
+fi
+
 sleep 1
 
 xsetwacom --set 'HID 256c:006d Pen stylus' Button 2 "2" # middle mouse button
