@@ -2,12 +2,30 @@
 
 # This script backs up some important stuff
 
-echo `date` "| Backing up Documents..." | tee -a logfile
-rsync -aAXH --delete --stats src dest | tee -a logfile
-echo $'\n'`date` "| Done!" | tee -a logfile
+echo `date` "| Backing up Documents..." | tee -a /home/sintan/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats /home/sintan/Documents/ /mnt/storage/sintan/Documents/ | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
 
-echo "----------" | tee -a logfile
+echo "----------" | tee -a /home/sintan/TempStorage/impfilesbk.log
 
-# Do as many times as needed with dest, src, logfile etc replaced with proper locations
+echo `date` "| Backing up Academics..." | tee -a /home/sintan/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats /home/sintan/Academics/ /mnt/storage/sintan/Academics/ | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
 
-echo $'\n'"--------------------------------------------------" | tee -a logfile
+echo "----------" | tee -a /home/sintan/TempStorage/impfilesbk.log
+
+echo `date` "| Backing up Pictures..." | tee -a /home/sintan/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats /home/sintan/Pictures/ /mnt/storage/sintan/Pictures/ | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+
+echo "----------" | tee -a /home/sintan/TempStorage/impfilesbk.log
+
+echo `date` "| Backing up Zotero..." | tee -a /home/sintan/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats /home/sintan/Zotero/ /mnt/storage/sintan/Zotero/ | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+
+echo `date` "| Backing up some config files and stuff..." | tee -a /home/sintan/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats /home/sintan/.config /home/sintan/.tmux.conf /home/sintan/.profile /home/sintan/.bashrc /home/sintan/.Xresources /home/sintan/.local/bin/personal /home/sintan/.ssh /mnt/storage/sintan/config/ | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+
+echo $'\n'"--------------------------------------------------" | tee -a /home/sintan/TempStorage/impfilesbk.log
