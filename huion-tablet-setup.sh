@@ -12,14 +12,15 @@
 
 # Make /usr/local/bin/huion-tablet-mount with this content :
 # #!/bin/sh
+#
 # <location-of-this-script> & exit
 
 # Make sure to install xf86-input-wacom (might have to restart)
 # Add this script to autostart of your DE or .profile or somehow make it run at boot (so that it works in case the tablet is connected at boot)
 
-if [ $(xsetwacom --list | grep -c "HID 256c:006d") -ne "2" ]; then
-	echo "No supported devices found!"
-	exit
+if [ "$(xsetwacom --list | grep -c 'HID 256c:006d')" -ne "2" ]; then
+    echo "No supported devices found!"
+    exit 1
 fi
 
 sleep 1

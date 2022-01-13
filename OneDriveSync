@@ -4,7 +4,7 @@
 # Assumes that the sync target is set up as OneDrive:Syncs in rclone
 
 if [ $(id -u) -eq 0 ]; then
-	exec sudo -H -u <user> $0 "$@"
+	exec sudo -H -u sintan $0 "$@"
 fi
 
 notify() {
@@ -21,6 +21,6 @@ notify() {
 }
 
 notify "OneDrive sync" "Sync started..."
-flock -n .onedrivesynclock rclone sync -c -L --log-file=logfile --log-level INFO source OneDrive:Syncs
+flock -n .onedrivesynclock rclone sync -c -L --log-file="/home/sintan/TempStorage/OneDriveSync.log" --log-level INFO "/home/sintan/TempStorage/OneDrive/" OneDrive:Syncs
 notify "OneDrive sync" "Sync finished!"
 
