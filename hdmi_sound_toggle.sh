@@ -5,7 +5,6 @@
 # Then create the file /etc/udev/rules.d/99-hdmi_sound.rules with the following content :
 # KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="change", RUN+="/usr/local/bin/hdmi_sound_toggle.sh"
 # Then run 'udevadm control --reload-rules' and reboot
-# If run manually, make sure to run it as root
 
 export PATH=/usr/bin
 
@@ -32,4 +31,3 @@ for OUTPUT in $(cd "$CARD_PATH" && echo card*); do
 done
 echo selecting output $AUDIO_OUTPUT
 sudo -u "$USER_NAME" pactl --server "$PULSE_SERVER" set-card-profile 0 output:$AUDIO_OUTPUT+input:analog-stereo
-
