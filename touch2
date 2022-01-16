@@ -2,5 +2,12 @@
 
 # It makes the parent folders (if needed) while touch-ing.
 
-mkdir -p "$(dirname "$1")" &&
-    touch "$1"
+if [ $# -ge 1 ]; then
+    for f in $@
+    do
+        mkdir -p "$(dirname "$f")"
+        touch "$f"
+    done
+else
+    echo "No filenames passed."
+fi
