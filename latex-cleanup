@@ -1,18 +1,26 @@
 #!/bin/sh
 
 # I use it to clean up latex build files from a directory after I'm done with the project.
-
+# Just run it inside the directory with the files.
 # Depends on trash-cli
+# Pass "-delete" to delete files instead of trashing.
+
+if [ "$1" = "-delete" ]; then
+    echo "Warning: Deleting instead of trashing."
+    d=1
+else
+    d=0
+fi
 
 for f in *.tex; do
     if [ -f "$f" ]; then
         h=$(basename "$f" .tex)
-        echo "Trashing files accompanying $h.tex..."
+        echo "Removing files accompanying $h.tex..."
         for g in "$h".*; do
             k=$( echo $g | sed 's/^.*\.//')
             if [ "$k" != "tex" ] && [ "$k" != "pdf" ] && [ "$k" != "bib" ] ; then
-                echo "Trashing $g..."
-                trash "$g"
+                echo "Removing $g..."
+                [ $d -eq 0 ] && trash "$g" || rm "$g"
             fi
         done
     fi
