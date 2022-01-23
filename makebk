@@ -10,8 +10,9 @@ fi
 if [ $# -ge 1 ]; then
     for f in $@
     do
-        [ -n "$f" ] &&cp "$f"{,.bak}
+        [ -f "$f" ] &&cp "$f"{,.bak}
     done
 else
     echo "No filenames passed."
+    exit 1
 fi
