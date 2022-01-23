@@ -6,3 +6,12 @@ if [[ -n "$1" ]];
 then
 	cp "$1"{,.bak}
 fi
+
+if [ $# -ge 1 ]; then
+    for f in $@
+    do
+        [ -n "$f" ] &&cp "$f"{,.bak}
+    done
+else
+    echo "No filenames passed."
+fi
