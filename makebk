@@ -2,11 +2,6 @@
 
 # This simply makes a backup of a file as filename.bak
 
-if [[ -n "$1" ]];
-then
-	cp "$1"{,.bak}
-fi
-
 if [ $# -ge 1 ]; then
     for f in $@
     do
