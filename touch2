@@ -10,4 +10,5 @@ if [ $# -ge 1 ]; then
     done
 else
     echo "No filenames passed."
+    exit 1
 fi
