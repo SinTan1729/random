@@ -5,10 +5,11 @@
 # Depends on trash-cli
 # Pass "-delete" to delete files instead of trashing.
 
-if [ "$1" = "-delete" ]; then
+if [ "$1" = "--delete" ]; then
     echo "Warning: Deleting instead of trashing."
     d=1
 else
+    echo "Trashing files by default, pass --delete to delete instead."
     d=0
 fi
 
@@ -25,4 +26,5 @@ for f in *.tex; do
         done
     fi
 done
+
 echo "Done!"
