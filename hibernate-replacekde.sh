@@ -6,6 +6,6 @@
 
 case $1/$2 in
   post/hibernate)
-    kwin_x11 --replace
+    DISPLAY=:0 kwin_x11 --replace
     ;;
 esac
