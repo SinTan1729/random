@@ -1,16 +1,16 @@
 #!/bin/sh
 
-# Steps for setting up the drivers of Huion Inspiroy H640P
+# **Steps for setting up the drivers of Huion Inspiroy H640P**
 
 # git clone https://github.com/Huion-Linux/DIGImend-kernel-drivers-for-Huion
 # cd DIGImend-kernel-drivers-for-Huion
 # sed -i 's/SUBDIRS=/M=/' Makefile (only for arch or related)
 # sudo make dkms_install
 
-# Make /etc/udev/rules.d/00-usb-huion.rules with this content (to run it whenever the tabler is conencted):
+# Create /etc/udev/rules.d/00-usb-huion.rules with this content (to run it whenever the tablet is conencted):
 # ACTION=="add", ATTRS{idVendor}=="256c", ATTRS{idProduct}=="006d", ENV{XAUTHORITY}="/home/sintan/.Xauthority", ENV{DISPLAY}=":0", OWNER=<user>, RUN+="/usr/local/bin/huion-tablet-mount"
 
-# Make /usr/local/bin/huion-tablet-mount with this content :
+# Create /usr/local/bin/huion-tablet-mount with this content :
 # #!/bin/sh
 #
 # <location-of-this-script> & exit
