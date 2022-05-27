@@ -1,15 +1,16 @@
 #!/bin/sh
 
 # It renames the .srt files in a directory to match the .mp4 movie names (since those are the formats I usually need).
+# If the subtitles are in a subfolder, the script should still work as long as there's only one .srt file.
 # It makes the subs discoverable by virtually any video player.
 
 for f in *.mp4; do
     if [ -f "$f" ]; then
         h=$(basename "$f" .mp4)
         echo "Renaming the subtitle (if any) accompanying $h.mp4..."
-        n=$(find . -maxdepth 1 -name "*.srt" -printf '.' | wc -m)
+        n=$(find . -maxdepth 2 -name "*.srt" -printf '.' | wc -m)
         if [ $n -eq 1 ] && ! [ -f $h.srt ]; then
-            mv *.srt $h.srt
+            find . -maxdepth 2 -name "*.srt" -exec mv {} $h.srt \;
             echo "Done!"
         else
             echo "Unable to find unique srt file that needs to be renamed."
