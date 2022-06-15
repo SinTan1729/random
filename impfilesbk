@@ -2,7 +2,7 @@
 
 # This script backs up some important stuff
 
-# Setup location for home
+# Setup location for home and backup directory
 HMDIR=/home/sintan
 BKDIR=/mnt/storage/sintan
 
