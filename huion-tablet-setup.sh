@@ -15,15 +15,15 @@
 # Make sure to install xf86-input-wacom (might have to restart)
 # Add this script to autostart of your DE or .profile or somehow make it run at boot (so that it works in case the tablet is connected at boot)
 
-if [ "$(xsetwacom --list | grep -c 'HID 256c:006d')" -ne "2" ]; then
+if [ "$(xsetwacom --list | grep -c 'HID 256c:006d')" -ne "3" ]; then
     echo "No supported devices found!"
     exit 1
 fi
 
 sleep 1
 
-xsetwacom --set 'HID 256c:006d Pen stylus' Button 2 "2" # middle mouse button
-xsetwacom --set 'HID 256c:006d Pen stylus' Button 3 "3" # right mouse button
+xsetwacom --set 'HID 256c:006d stylus' Button 2 "2" # middle mouse button
+xsetwacom --set 'HID 256c:006d stylus' Button 3 "3" # right mouse button
 xsetwacom --set 'HID 256c:006d Pad pad' Button 1 "key +ctrl +s -s -ctrl" # save
 xsetwacom --set 'HID 256c:006d Pad pad' Button 2 "key +alt +c -c -alt" # cycle colors in xournal++
 xsetwacom --set 'HID 256c:006d Pad pad' Button 3 "4" # scroll up
