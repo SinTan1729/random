@@ -2,30 +2,34 @@
 
 # This script backs up some important stuff
 
-echo `date` "| Backing up Documents..." | tee -a /home/sintan/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats /home/sintan/Documents/ /mnt/storage/sintan/Documents/ | tee -a /home/sintan/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+# Setup location for home
+HMDIR=/home/sintan
+BKDIR=/mnt/storage/sintan
 
-echo "----------" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo `date` "| Backing up Documents..." | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/Documents/ $BKDIR/Documents/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo `date` "| Backing up Academics..." | tee -a /home/sintan/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats /home/sintan/Academics/ /mnt/storage/sintan/Academics/ | tee -a /home/sintan/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo "----------" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo "----------" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo `date` "| Backing up Academics..." | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/Academics/ $BKDIR/Academics/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo `date` "| Backing up Pictures..." | tee -a /home/sintan/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats /home/sintan/Pictures/ /mnt/storage/sintan/Pictures/ | tee -a /home/sintan/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo "----------" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo "----------" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo `date` "| Backing up Pictures..." | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/Pictures/ $BKDIR/Pictures/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo `date` "| Backing up Zotero..." | tee -a /home/sintan/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats /home/sintan/Zotero/ /mnt/storage/sintan/Zotero/ | tee -a /home/sintan/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo "----------" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo `date` "| Backing up some config files and stuff..." | tee -a /home/sintan/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats /home/sintan/.config /home/sintan/.tmux.conf /home/sintan/.profile /home/sintan/.bashrc /home/sintan/.Xresources /home/sintan/.local/bin/personal /home/sintan/.ssh /mnt/storage/sintan/config/ | tee -a /home/sintan/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo `date` "| Backing up Zotero..." | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/Zotero/ $BKDIR/Zotero/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
-echo $'\n'"--------------------------------------------------" | tee -a /home/sintan/TempStorage/impfilesbk.log
+echo `date` "| Backing up some config files and stuff..." | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.config $HMDIR/.tmux.conf $HMDIR/.profile $HMDIR/.bashrc $HMDIR/.Xresources $HMDIR/.local/bin/personal $HMDIR/.ssh $BKDIR/config/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+
+echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
