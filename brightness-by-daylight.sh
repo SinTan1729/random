@@ -12,7 +12,7 @@
 
 # Add the following to crontab to make it run automatically and properly
 
-# @reboot <location-of-this-script>
+# @reboot <location-of-this-script> && <location-of-this-script> crontab
 # 0 0,12 * * * <location-of-this-script> crontab
 
 confdir="/home/sintan/.config"
@@ -21,15 +21,23 @@ if test -f $confdir/latlong.toml ; then
     source $confdir/latlong.toml
 else
     echo "No location config found!"
+    exit
 fi
 
-# Check if called by crontab. If yes, start waiting, otherwise
-# adjust brightness immediately
+# Check if called by crontab as routine. If yes, start waiting,
+# otherwise adjust brightness immediately
+
 if [ "$1" == "crontab" ]; then
-    if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
-        sunwait wait set offset 10 $latitude $longitude && ddcutil setvcp 10 40
+    if test -f /tmp/brightness-crontab; then
+        exit
     else
-        sunwait wait rise offset 10 $latitude $longitude && ddcutil setvcp 10 70
+        touch /tmp/brightness-crontab
+        if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
+            sunwait wait set offset 10 $latitude $longitude && ddcutil setvcp 10 40
+        else
+            sunwait wait rise offset 10 $latitude $longitude && ddcutil setvcp 10 70
+        fi
+        rm /tmp/brightness-crontab
     fi
 else
     if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
@@ -37,6 +45,6 @@ else
         echo "Monitor brightness set to 70%, since it's day time."
     else
         ddcutil setvcp 10 40
-        "Monitor brightness set to 40%, since it's night time."
+        echo "Monitor brightness set to 40%, since it's night time."
     fi
 fi
