@@ -31,10 +31,11 @@ if [ "$1" == "crontab" ]; then
     if test -f /tmp/brightness-crontab; then
         exit
     else
-        touch /tmp/brightness-crontab
         if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
+            echo "Waiting for sunset at" $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') > /tmp/brightness-crontab
             sunwait wait set offset 10 $latitude $longitude && ddcutil setvcp 10 40
         else
+            echo "Waiting for sunrise at" $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') > /tmp/brightness-crontab
             sunwait wait rise offset 10 $latitude $longitude && ddcutil setvcp 10 70
         fi
         rm /tmp/brightness-crontab
