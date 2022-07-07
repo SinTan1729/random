@@ -12,8 +12,15 @@
 
 # Add the following to crontab to make it run automatically and properly
 
-# @reboot <location-of-this-script> && <location-of-this-script> crontab
+# @reboot <location-of-this-script> crontab
 # 0 0,12 * * * <location-of-this-script> crontab
+
+# It might also be a good idea to add this script's location to your DE's autostart list, or to '.profile' so that it launches on system login
+
+# To run this script whenever and HDMI cable is connected, copy this file to /usr/local/bin/ and run 'chmod +x /usr/local/bin/brightness-by-daylight.sh'
+# Then create the file /etc/udev/rules.d/89-hdmi_brightness.rules with the following content :
+# KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="add", RUN+="/usr/local/bin/brightness-by-daylight.sh"
+# Then run 'udevadm control --reload-rules' and reboot
 
 confdir="/home/sintan/.config"
 
