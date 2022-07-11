@@ -9,18 +9,13 @@
 # ~/.config/latlong.toml
 # latitude="0.000000N"
 # longitude="0.000000E"
+# scriptdir=<location-of-this-script>
 
-# Add the following to crontab to make it run automatically and properly
-
-# @reboot <location-of-this-script> crontab
-# 0 0,12 * * * <location-of-this-script> crontab
+# Just run this script one manually to set it up to run perpetually (hopefully) using 'at'
+# (Some distros don't come with 'at' preinstalled, so you might need to install 'at' and enable the 'atd' service.)
 
 # It might also be a good idea to add this script's location to your DE's autostart list, or to '.profile' so that it launches on system login
-
-# To run this script whenever and HDMI cable is connected, copy this file to /usr/local/bin/ and run 'chmod +x /usr/local/bin/brightness-by-daylight.sh'
-# Then create the file /etc/udev/rules.d/89-hdmi_brightness.rules with the following content :
-# KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="add", RUN+="/usr/local/bin/brightness-by-daylight.sh"
-# Then run 'udevadm control --reload-rules' and reboot
+# (Sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
 
 confdir="/home/sintan/.config"
 
@@ -35,17 +30,10 @@ fi
 # otherwise adjust brightness immediately
 
 if [ "$1" == "crontab" ]; then
-    if test -f /tmp/brightness-crontab; then
-        exit
+    if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
+        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') <<< "ddcutil setvcp 10 40 && $scriptdir/brightness-by-daylight.sh crontab"
     else
-        if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
-            echo "Waiting for sunset at" $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') > /tmp/brightness-crontab
-            sunwait wait set offset 10 $latitude $longitude && ddcutil setvcp 10 40
-        else
-            echo "Waiting for sunrise at" $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') > /tmp/brightness-crontab
-            sunwait wait rise offset 10 $latitude $longitude && ddcutil setvcp 10 70
-        fi
-        rm /tmp/brightness-crontab
+        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') <<< "ddcutil setvcp 10 70 && $scriptdir/brightness-by-daylight.sh crontab"
     fi
 else
     if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
