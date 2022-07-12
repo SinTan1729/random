@@ -26,15 +26,15 @@ else
     exit
 fi
 
-# Check if called by crontab as routine. If yes, create a schedule using `at`,
+# Check if we want to access the scheduler. If yes, create a schedule using `at`,
 # otherwise adjust brightness immediately
 
-if [ "$1" == "crontab" ]; then
+if [ "$1" == "scheduler" ]; then
     if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
         # +1 minute is so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
-        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') +1 minute <<< "ddcutil setvcp 10 40 && $scriptdir/brightness-by-daylight.sh crontab"
+        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') +1 minute <<< "ddcutil setvcp 10 40 && $scriptdir/brightness-by-daylight.sh scheduler"
     else
-        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') +1 minute <<< "ddcutil setvcp 10 70 && $scriptdir/brightness-by-daylight.sh crontab"
+        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') +1 minute <<< "ddcutil setvcp 10 70 && $scriptdir/brightness-by-daylight.sh scheduler"
     fi
 else
     if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
