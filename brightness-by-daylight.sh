@@ -10,6 +10,8 @@
 # latitude="0.000000N"
 # longitude="0.000000E"
 # scriptdir=<location-of-this-script>
+# high=70
+# low=40
 
 # Just run this script one manually to set it up to run perpetually (hopefully) using 'at'
 # (Some distros don't come with 'at' preinstalled, so you might need to install 'at' and enable the 'atd' service.)
@@ -32,16 +34,16 @@ fi
 if [ "$1" == "scheduler" ]; then
     if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
         # +1 minute is so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
-        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') +1 minute <<< "ddcutil setvcp 10 40 && $scriptdir/brightness-by-daylight.sh scheduler"
+        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') +1 minute <<< "ddcutil setvcp 10 $low && $scriptdir/brightness-by-daylight.sh scheduler"
     else
-        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') +1 minute <<< "ddcutil setvcp 10 70 && $scriptdir/brightness-by-daylight.sh scheduler"
+        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') +1 minute <<< "ddcutil setvcp 10 $high && $scriptdir/brightness-by-daylight.sh scheduler"
     fi
 else
     if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
-        ddcutil setvcp 10 70
-        echo "Monitor brightness set to 70%, since it's day time."
+        ddcutil setvcp 10 $high
+        echo "Monitor brightness set to $high%, since it's day time."
     else
-        ddcutil setvcp 10 40
-        echo "Monitor brightness set to 40%, since it's night time."
+        ddcutil setvcp 10 $low
+        echo "Monitor brightness set to $low%, since it's night time."
     fi
 fi
