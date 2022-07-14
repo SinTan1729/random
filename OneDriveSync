@@ -21,6 +21,6 @@ notify() {
 }
 
 notify "OneDrive sync" "Sync started..."
-flock -n .onedrivesynclock rclone sync -c -L --log-file="/home/sintan/TempStorage/OneDriveSync.log" --log-level INFO "/home/sintan/TempStorage/OneDrive/" OneDrive:Syncs
+flock -n /var/lock/onedrivesync.lock rclone sync -c -L --log-file="/home/sintan/TempStorage/OneDriveSync.log" --log-level INFO "/home/sintan/TempStorage/OneDrive/" OneDrive:Syncs
 notify "OneDrive sync" "Sync finished!"
 
