@@ -29,7 +29,13 @@ rsync -aAXH --delete --stats $HMDIR/Zotero/ $BKDIR/Zotero/ | tee -a $HMDIR/TempS
 echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
 echo `date` "| Backing up some config files and stuff..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.config $HMDIR/.tmux.conf $HMDIR/.profile $HMDIR/.bashrc $HMDIR/.Xresources $HMDIR/.local/bin/personal $HMDIR/.ssh $BKDIR/config/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.config/ $BKDIR/config/[dot]config/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.tmux.conf $BKDIR/config/[dot]tmux.conf | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.profile $BKDIR/config/[dot]profile | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.bashrc $BKDIR/config/[dot]bashrc | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.Xresources $BKDIR/config/[dot]Xresources | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.local/bin/personal/ $BKDIR/config/[dot]local_bin_personal/ | tee -a $HMDIR/TempStorage/impfilesbk.log
+rsync -aAXH --delete --stats $HMDIR/.ssh/ $BKDIR/config/[dot]ssh/ | tee -a $HMDIR/TempStorage/impfilesbk.log
 echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
 echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
