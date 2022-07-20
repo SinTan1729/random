@@ -41,5 +41,5 @@ rsync -aAXH --delete --stats $HMDIR/.ssh/ $BKDIR/config/[dot]ssh/ | tee -a $HMDI
 echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
 echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
