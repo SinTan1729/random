@@ -28,6 +28,8 @@ echo `date` "| Backing up Zotero..." | tee -a $HMDIR/TempStorage/impfilesbk.log
 rsync -aAXH --delete --stats $HMDIR/Zotero/ $BKDIR/Zotero/ | tee -a $HMDIR/TempStorage/impfilesbk.log
 echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
+echo "----------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+
 echo `date` "| Backing up some config files and stuff..." | tee -a $HMDIR/TempStorage/impfilesbk.log
 rsync -aAXH --delete --stats $HMDIR/.config/ $BKDIR/config/[dot]config/ | tee -a $HMDIR/TempStorage/impfilesbk.log
 rsync -aAXH --delete --stats $HMDIR/.tmux.conf $BKDIR/config/[dot]tmux.conf | tee -a $HMDIR/TempStorage/impfilesbk.log
@@ -38,4 +40,6 @@ rsync -aAXH --delete --stats $HMDIR/.local/bin/personal/ $BKDIR/config/[dot]loca
 rsync -aAXH --delete --stats $HMDIR/.ssh/ $BKDIR/config/[dot]ssh/ | tee -a $HMDIR/TempStorage/impfilesbk.log
 echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
 
+echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a $HMDIR/TempStorage/impfilesbk.log
 echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
