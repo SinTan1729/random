@@ -16,7 +16,7 @@
 # Just run this script one manually to set it up to run perpetually (hopefully) using 'at'
 # (Some distros don't come with 'at' preinstalled, so you might need to install 'at' and enable the 'atd' service.)
 
-# It might also be a good idea to add this script's location to your DE's autostart list, or to '.profile' so that it launches on system login
+# It might also be a good idea to add '<location-of-this-script> scheduler' to your DE's autostart list, or to '.profile' so that it launches on system login
 # (Sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
 
 confdir="/home/sintan/.config"
@@ -28,22 +28,36 @@ else
     exit
 fi
 
-# Check if we want to access the scheduler. If yes, create a schedule using `at`,
-# otherwise adjust brightness immediately
+sun_status=$(sunwait poll $latitude $longitude)
+
+if [ $sun_status == "DAY" ]; then
+        target=$high
+    else
+        target=$low
+    fi
+
+ddcutil setvcp 10 $target
+echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
+
+# Check if we want to access the scheduler. If yes, create a schedule using `at`
 
 if [ "$1" == "scheduler" ]; then
-    if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
-        # +1 minute is so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
-        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}') +1 minute <<< "ddcutil setvcp 10 $low && $scriptdir/brightness-by-daylight.sh scheduler"
+    if [ $sun_status == "DAY" ]; then
+        time_next=$(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}')
     else
-        at -m $(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}') +1 minute <<< "ddcutil setvcp 10 $high && $scriptdir/brightness-by-daylight.sh scheduler"
+        time_next=$(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}')
     fi
-else
-    if [ $(sunwait poll $latitude $longitude) == "DAY" ]; then
-        ddcutil setvcp 10 $high
-        echo "Monitor brightness set to $high%, since it's day time."
-    else
-        ddcutil setvcp 10 $low
-        echo "Monitor brightness set to $low%, since it's night time."
+    task_list=$(atq | grep $time_next | awk '{print $1}')
+
+    for item in $task_list
+    do
+        if ! [ $(at -c $item | sed 'x;$!d' | awk '{print $4}') == "$scriptdir/brightness-by-daylight.sh" ]; then
+            # we wait a minute so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
+            at -m $time_next <<< "sleep 60 && $scriptdir/brightness-by-daylight.sh scheduler"
+        fi
+    done
+
+    if [ -z "$task_list" ]; then # in case there's no at entry
+        at -m $time_next <<< "sleep 60 && $scriptdir/brightness-by-daylight.sh scheduler"
     fi
 fi
