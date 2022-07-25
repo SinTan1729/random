@@ -34,7 +34,7 @@ if [ $sun_status == "DAY" ]; then
         target=$high
     else
         target=$low
-    fi
+fi
 
 ddcutil setvcp 10 $target
 echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
