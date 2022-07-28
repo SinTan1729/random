@@ -30,6 +30,9 @@ else
     exit
 fi
 
+# sometimes we need to wait a minute so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
+[ "$2" == "wait" ] && echo "Waiting 60 seconds..." && sleep 60
+
 # get sun status
 sun_status=$(sunwait poll $latitude $longitude)
 [ $sun_status == "DAY" ] && target=$high || target=$low
@@ -53,9 +56,6 @@ if [ "$1" == "scheduler" ]; then
     do
         [ "$(at -c $item | sed 'x;$!d')" == "$scriptdir/brightness-by-daylight.sh scheduler wait" ] && flag=false
     done
-
-    # sometimes we need to wait a minute so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
-    [ "$2" == "wait" ] && sleep 60
 
     # actually create the schedule
     $flag && at -m $time_next <<< "$scriptdir/brightness-by-daylight.sh scheduler wait"
