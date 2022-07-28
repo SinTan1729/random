@@ -16,7 +16,7 @@
 # just run this script one manually to set it up to run perpetually (hopefully) using 'at'
 # (some distros don't come with 'at' preinstalled, so you might need to install 'at' and enable the 'atd' service.)
 
-# it might also be a good idea to add '<location-of-this-script> scheduler wait' to your DE's autostart list, or to '.profile' so that it launches on system login
+# it might also be a good idea to add '<location-of-this-script> scheduler' to your DE's autostart list, or to '.profile' so that it launches on system login
 # (sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
 
 # location of the config file
@@ -30,33 +30,38 @@ else
     exit
 fi
 
-# sometimes we need to wait a minute so that the next schedule is set up properly (or sunwait reports day/night in a misleading way)
-[ "$2" == "wait" ] && echo "Waiting 60 seconds..." && sleep 60
-
 # get sun status
 sun_status=$(sunwait poll $latitude $longitude)
-[ $sun_status == "DAY" ] && target=$high || target=$low
-
-# do the brightness adjustment using ddcutil
-ddcutil setvcp 10 $target
-echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
 
 # check if we want to access the scheduler. If yes, create a schedule using `at`
 if [ "$1" == "scheduler" ]; then
-    if [ $sun_status == "DAY" ]; then
-        time_next=$(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}')
-    else
-        time_next=$(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}')
-    fi
+    # get the timings for twilight events and current time
+    sunrise_time=$(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $4}')
+    sunset_time=$(sunwait report 35.221050N 97.445938W | grep "Daylight:" | awk '{print $6}')
+    now_time=$(date "+%H:%M")
+
+    # try to figure out if it's twilight right now, then need to adjust sun_status
+    [ $sunrise_time == $now_time ] && sun_status="DAY"
+    [ $sunset_time == $now_time ] && sun_status="NIGHT"
+    
+    # figure out the time of the next twilight
+    [ $sun_status == "DAY" ] && time_next=$sunset_time || time_next=$sunrise_time
+
+    # query all `at` tasks
     task_list=$(atq | grep $time_next | awk '{print $1}')
 
     # loop through all `at` entries to see if a task already exists
     flag=true
     for item in $task_list
     do
-        [ "$(at -c $item | sed 'x;$!d')" == "$scriptdir/brightness-by-daylight.sh scheduler wait" ] && flag=false
+        [ "$(at -c $item | sed 'x;$!d')" == "$scriptdir/brightness-by-daylight.sh scheduler" ] && flag=false
     done
 
-    # actually create the schedule
-    $flag && at -m $time_next <<< "$scriptdir/brightness-by-daylight.sh scheduler wait"
+    # create the schedule
+    $flag && at -m $time_next <<< "$scriptdir/brightness-by-daylight.sh scheduler"
 fi
+
+# do the brightness adjustment using ddcutil
+[ $sun_status == "DAY" ] && target=$high || target=$low
+ddcutil setvcp 10 $target
+echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
