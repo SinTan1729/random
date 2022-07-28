@@ -26,7 +26,7 @@ confdir="/home/sintan/.config"
 if test -f $confdir/latlong.toml ; then
     source $confdir/latlong.toml
 else
-    echo "No location config found!"
+    echo "No config file found!"
     exit
 fi
 
