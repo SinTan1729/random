@@ -20,7 +20,7 @@
 # (sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
 
 # location of the config file
-confdir="/home/sintan/.config"
+[ -z "$XDG_CONFIG_HOME" ] && confdir="/home/sintan/.config" || confdir="$XDG_CONFIG_HOME"
 
 # read from the config file
 if test -f $confdir/latlong.toml ; then
