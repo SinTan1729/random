@@ -21,20 +21,32 @@ fi
 for i in "${@:2}"
 do
     if [ "$i" == "personal_script_dir" ]; then
-        cp "$1" "/home/sintan/.local/bin/personal/"
-        chmod +x "/home/sintan/.local/bin/personal/$(basename "$1")"
+        dest="/home/sintan/.local/bin/personal/"
+        echo Copying to "$dest"...
+        cp "$1" "$dest"
+        echo Setting proper permissions...
+        chmod +x "$dest$(basename "$1")"
 
     elif [ "$i" == "cron_daily" ]; then
-        sudo cp "$1" "/etc/cron.daily/"
-        sudo chmod +x "/etc/cron.daily/$(basename "$1")"
+        dest="/etc/cron.daily/"
+        echo Copying to "$dest"...
+        sudo cp "$1" "$dest"
+        echo Setting proper permissions...
+        sudo chmod +x "$dest$(basename "$1")"
         
     elif [ "$i" == "cron_weekly" ]; then
-        sudo cp "$1" "/etc/cron.weekly/"
-        sudo chmod +x "/etc/cron.weekly/$(basename "$1")"
+        dest="/etc/cron.weekly/"
+        echo Copying to "$dest"...
+        sudo cp "$1" "$dest"
+        echo Setting proper permissions...
+        sudo chmod +x "$dest$(basename "$1")"
 
     elif [ "$i" == "cron_monthly" ]; then
-        sudo cp "$1" "/etc/cron.monthly/"
-        sudo chmod +x "/etc/cron.monthly/$(basename "$1")"
+        dest="/etc/cron.monthly/"
+        echo Copying to "$dest"...
+        sudo cp "$1" "$dest"
+        echo Setting proper permissions...
+        sudo chmod +x "$dest$(basename "$1")"
 
     else echo "Unrecognized destination: $i"
     fi
