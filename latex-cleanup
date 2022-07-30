@@ -6,7 +6,10 @@
 # Pass "-delete" to delete files instead of trashing.
 
 if [ "$1" = "--delete" ]; then
-    echo "Warning: Deleting instead of trashing."
+    read -p "Warning: Deleting instead of trashing. Continue? [y/N]: " resp
+    if [ $resp != "y" ] && [ $resp != "Y" ]; then
+        exit
+    fi
     d=1
 else
     echo "Trashing files by default, pass --delete to delete instead."
