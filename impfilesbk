@@ -37,7 +37,7 @@ echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo `date` "| Backing up some config files and stuff..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/.config/" "$BKDIR/config/[dot]config/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --exclude={'*cache*','*Cache*'} --delete-excluded "$HMDIR/.config/" "$BKDIR/config/[dot]config/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.profile" "$BKDIR/config/[dot]profile" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR/config/[dot]bashrc" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.Xresources" "$BKDIR/config/[dot]Xresources" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
