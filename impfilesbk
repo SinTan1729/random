@@ -3,49 +3,48 @@
 # This script backs up some important stuff
 
 # Setup location for home and backup directory
-HMDIR=/home/sintan
-BKDIR=/mnt/storage/sintan
+HMDIR="/home/sintan"
+BKDIR="/mnt/storage/sintan"
 
-echo `date` "| Backing up Documents..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/Documents/ $BKDIR/Documents/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo `date` "| Backing up Documents..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo `date` "| Backing up Academics..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/Academics/ $BKDIR/Academics/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo `date` "| Backing up Academics..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo `date` "| Backing up Pictures..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/Pictures/ $BKDIR/Pictures/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo `date` "| Backing up Pictures..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo `date` "| Backing up PhotoPrism index..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/PhotoPrism/storage/index-backup.sql $BKDIR/Programs/photoprism-backup.sql | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo `date` "| Backing up PhotoPrism index..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/PhotoPrism/storage/index-backup.sql" "$BKDIR/Programs/photoprism-backup.sql" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo `date` "| Backing up Zotero..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/Zotero/ $BKDIR/Zotero/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo `date` "| Backing up Zotero..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR/Zotero/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo `date` "| Backing up some config files and stuff..." | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.config/ $BKDIR/config/[dot]config/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.tmux.conf $BKDIR/config/[dot]tmux.conf | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.profile $BKDIR/config/[dot]profile | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.bashrc $BKDIR/config/[dot]bashrc | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.Xresources $BKDIR/config/[dot]Xresources | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.local/bin/personal/ $BKDIR/config/[dot]local_bin_personal/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-rsync -aAXH --delete --stats $HMDIR/.ssh/ $BKDIR/config/[dot]ssh/ | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo $'\n'`date` "| Done!" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo `date` "| Backing up some config files and stuff..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.config/" "$BKDIR/config/[dot]config/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.profile" "$BKDIR/config/[dot]profile" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR/config/[dot]bashrc" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.Xresources" "$BKDIR/config/[dot]Xresources" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.local/bin/personal/" "$BKDIR/config/[dot]local_bin_personal/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.ssh/" "$BKDIR/config/[dot]ssh/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
-echo $'\n'"--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a $HMDIR/TempStorage/impfilesbk.log
-echo "--------------------------------------------------" | tee -a $HMDIR/TempStorage/impfilesbk.log
+echo $'\n'"--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
