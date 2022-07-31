@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# This simply makes a backup of a file as filename.bak
+# This simply makes backup of file(s) as filename.bak
 
 if [ $# -ge 1 ]; then
     for f in $@
     do
-        [ -f "$f" ] &&cp "$f"{,.bak}
+        [ -f "$f" ] && cp "$f"{,.bak}
     done
 else
     echo "No filenames passed."
