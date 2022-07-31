@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Use the official drivers instead. They're available now.
+# Install the AUR package `huiontablet`
+
 # **Steps for setting up the drivers of Huion Inspiroy H640P**
 
 # Install the AUR package digimend-kernel-drivers-dkms-git
