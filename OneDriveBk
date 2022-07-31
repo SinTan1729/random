@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# For syncing some files with OneDrive
-# Assumes that the sync target is set up as OneDrive:Syncs in rclone
+# For backing up files with OneDrive
+# Assumes that the backup target is set up as OneDrive in rclone
 
 if [ $(id -u) -eq 0 ]; then
 	exec sudo -H -u sintan $0 "$@"
@@ -20,7 +20,7 @@ notify() {
     sudo -u $user DISPLAY=$display DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$uid/bus notify-send -a rclone -h string:desktop-entry:alacritty "$@"
 }
 
-notify "OneDrive sync" "Sync started..."
-flock -n /tmp/onedrivesync.lock rclone sync -c -L --log-file="/home/sintan/TempStorage/OneDriveSync.log" --log-level INFO "/home/sintan/TempStorage/OneDrive/" OneDrive:Syncs
-notify "OneDrive sync" "Sync finished!"
+notify "OneDriveBk" "Backup started..."
+flock -n /tmp/onedrivesync.lock rclone sync -c -L --log-file="/home/sintan/TempStorage/OneDriveBk.log" --log-level INFO "/home/sintan/TempStorage/OneDrive/" OneDrive:Backup
+notify "OneDriveBk" "Backup finished!"
 
