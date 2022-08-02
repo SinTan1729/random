@@ -19,7 +19,10 @@
 # it might also be a good idea to add '<location-of-this-script> scheduler' to your DE's autostart list, or to '.profile' so that it launches on system login
 # (sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
 
-# location of the config file
+# avoid running two concurrent processes
+[ "${BRTNESSLOCKER}" != "running" ] && exec env BRTNESSLOCKER="running" flock -en "/tmp/brightness-by-daylight" "$0" "$@" || :
+
+# set location of the config file
 [ -z "$XDG_CONFIG_HOME" ] && confdir="/home/sintan/.config" || confdir="$XDG_CONFIG_HOME"
 
 # read from the config file
