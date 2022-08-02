@@ -20,7 +20,7 @@
 # (sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
 
 # avoid running two concurrent processes
-[ "${BRTNESSLOCKER}" != "running" ] && exec env BRTNESSLOCKER="running" flock -en "/tmp/brightness-by-daylight" "$0" "$@" || :
+[ "${BRTNESSLOCKER}" != "running" ] && exec env BRTNESSLOCKER="running" flock -en "/tmp/brightness-by-daylight.lock" "$0" "$@" || :
 
 # set location of the config file
 [ -z "$XDG_CONFIG_HOME" ] && confdir="/home/sintan/.config" || confdir="$XDG_CONFIG_HOME"

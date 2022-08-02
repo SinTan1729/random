@@ -3,7 +3,7 @@
 # This script backs up some important stuff
 
 # Run only one instance of this script at one time
-[ "${BKLOCKER}" != "running" ] && exec env BKLOCKER="running" flock -en "/tmp/impfilesbk" "$0" "$@" || :
+[ "${BKLOCKER}" != "running" ] && exec env BKLOCKER="running" flock -en "/tmp/impfilesbk.lock" "$0" "$@" || :
 
 # Setup location for home and backup directory
 HMDIR="/home/sintan"
