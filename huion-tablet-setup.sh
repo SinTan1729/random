@@ -5,9 +5,9 @@
 # Install the AUR package digimend-kernel-drivers-dkms-git
 
 # Create /etc/udev/rules.d/00-usb-huion.rules with this content (to run it whenever the tablet is conencted):
-# ACTION=="add", ATTRS{idVendor}=="256c", ATTRS{idProduct}=="006d", ENV{XAUTHORITY}="/home/user/.Xauthority", ENV{DISPLAY}=":0", OWNER=<user>, RUN+="/usr/local/bin/huion-tablet-mount"
+# ACTION=="add", ATTRS{idVendor}=="256c", ATTRS{idProduct}=="006d", ENV{XAUTHORITY}="/home/user/.Xauthority", ENV{DISPLAY}=":0", OWNER="<user>", RUN+="/usr/local/bin/huion-tablet-mount"
 
-# Create /usr/local/bin/huion-tablet-mount with this content :
+# Create /usr/local/bin/huion-tablet-mount with this content and make it executable:
 # #!/bin/sh
 #
 # <location-of-this-script> & exit
