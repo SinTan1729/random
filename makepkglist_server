@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# this script lists all packages installed in my system and saves them
+# such that it's easy to install packages in case of a system reset
+
+# this is the server version
+
+# define location for output
+DIR=/mnt/storage/Documents/Backup/pkglists_server
+
+# make sure that the folder exists
+mkdir -p $DIR
+
+# list and save system packages
+# command -v pacman &> /dev/null && pacman -Qq > $DIR/pacman
+command -v dnf &> /dev/null && dnf list installed > $DIR/dnf
+
+# list and save pip packages
+command -v pip &> /dev/null && pip list | awk '{print $1}' | tail -n +3 > $DIR/pip
+
+# list and save pipx packages
+command -v pipx &> /dev/null && pipx list | grep package | awk '{print $2}' > $DIR/pipx
+
