@@ -53,7 +53,7 @@ echo "NOW SYNCING UP WITH THE SERVER" | tee -a "$HMDIR/TempStorage/impfilesbk.lo
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 HMDIR="/mnt/storage/sintan"
-BKDIR="server-ssh:/mnt/storage"
+BKDIR="server-rsync:/mnt/storage"
 LGDIR="/home/sintan"
 
 rsync -aAXH --delete --stats "$BKDIR/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
