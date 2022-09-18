@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# This script backs up some important stuff
+# This is the version for my home server
+
+# Run only one instance of this script at one time
+[ "${BKLOCKER}" != "running" ] && exec env BKLOCKER="running" flock -en "/tmp/impfilesbk.lock" "$0" "$@" || :
+
+# Setup location for home and backup directory
+HMDIR="/home/sintan"
+BKDIR="/mnt/storage"
+
+echo `date` "| Backing up PhotoPrism index..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/PhotoPrism/storage/index-backup.sql" "$BKDIR/Programs/Docker/photoprism-backup.sql" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Backing up Sonarr index..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/sonarr+prowlarr+bazarr/config_sonarr/Backups/" "$BKDIR/Programs/Docker/sonarr-backups/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Backing up Docker compose files..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --prune-empty-dirs -f '- /*/*/'  "$HMDIR/Docker/" "$BKDIR/Programs/Docker/DockerCompose/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Backing up installer scripts..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/installer-scripts/" "$BKDIR/Programs/installer-scripts/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Backing up some dotfiles..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*'} --delete-excluded "$HMDIR/.config/" "$BKDIR/dotfiles_server/[dot]config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.bash_profile" "$BKDIR/dotfiles_server/[dot]bash_profile" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR/dotfiles_server/[dot]bashrc" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+# rsync -aAXH --delete --stats "$HMDIR/.Xresources" "$BKDIR/dotfiles_server/[dot]Xresources" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$BKDIR/dotfiles/[dot]local_bin_personal/" "$HMDIR/.local/bin/personal/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.ssh/" "$BKDIR/dotfiles_server/[dot]ssh/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo $'\n'"--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+# Make the new files visible over samba
+chcon -R -t samba_share_t /mnt/storage/Programs/
+chcon -R -t samba_share_t /mnt/storage/dotfiles_server/
