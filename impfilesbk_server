@@ -11,7 +11,7 @@ HMDIR="/home/sintan"
 BKDIR="/mnt/storage"
 
 echo `date` "| Backing up PhotoPrism index..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Docker/PhotoPrism/storage/index-backup.sql" "$BKDIR/Programs/Docker/photoprism-backup.sql" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/PhotoPrism/storage/index-backup.sql" "$BKDIR/Programs/Docker/PhotoPrism/index-backup-"$(date +%A)".sql" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
