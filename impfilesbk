@@ -66,7 +66,7 @@ rsync -aAXH --delete --stats "$HMDIR/dotfiles/" "$BKDIR/dotfiles/" | tee -a "$LG
 rsync -aAXH --delete --stats "$BKDIR/dotfiles_server/" "$HMDIR/dotfiles_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Programs/Docker/" "$HMDIR/Programs/Docker/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Programs/installer-scripts/" "$HMDIR/Programs/installer-scripts/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Programs/" --exclude={Docker, installer-scripts} "$BKDIR/Programs/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --exclude={"Docker","installer-scripts"} "$HMDIR/Programs/" "$BKDIR/Programs/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Movies/" "$HMDIR/Movies/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Music/" "$BKDIR/Music/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Videos/" "$BKDIR/Videos/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
