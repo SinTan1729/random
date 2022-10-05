@@ -5,6 +5,11 @@
 
 # this is the server version
 
+# force script to run as specific user
+if [ "$(id -u)" -eq 0 ]; then
+    exec sudo -H -u sintan $0 "$@"
+fi
+
 # define location for output
 DIR=/mnt/storage/Documents/Backup/pkglists_server
 
