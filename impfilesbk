@@ -2,6 +2,11 @@
 
 # This script backs up some important stuff
 
+# force script to run as specific user
+if [ "$(id -u)" -eq 0 ]; then
+    exec sudo -H -u sintan $0 "$@"
+fi
+
 # Run only one instance of this script at one time
 [ "${BKLOCKER}" != "running" ] && exec env BKLOCKER="running" flock -en "/tmp/impfilesbk.lock" "$0" "$@" || :
 
