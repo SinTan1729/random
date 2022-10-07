@@ -63,7 +63,7 @@ LGDIR="/home/sintan"
 
 rsync -aAXH --delete --stats "$BKDIR/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Documents/Backup/pkglists_server/" "$LGDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --exclude="Backup/pkglists-server" "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --exclude="Backup/pkglists_server" "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --no-links "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR/Zotero/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
