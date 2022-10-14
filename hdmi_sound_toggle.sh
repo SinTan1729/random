@@ -6,6 +6,23 @@
 # KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="change", RUN+="/usr/local/bin/hdmi_sound_toggle.sh"
 # Then run 'udevadm control --reload-rules' and reboot
 
+# Add this to /etc/acpi/handler.sh (make sure acpid is installed and enabled) to pause all media automatically switch to HDMI (if available)
+# jack/headphone)
+#         case "$3" in
+#             plug)
+#                 logger "Headphones plugged"
+#                 ;;
+#             unplug)
+#                 logger "Headphones unplugged"
+#                 sudo -u <username> env -i bash -c "DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus' playerctl --all-players pause"
+#                 <location-of-this-script>
+#                 ;;
+#             *)
+#                 logger "ACPI action undefined: $3"
+#                 ;;
+#         esac
+#         ;;
+
 export PATH=/usr/bin
 
 USER_NAME=$(who | awk -v vt=tty$(fgconsole) '$0 ~ vt {print $1}')
