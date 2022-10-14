@@ -48,6 +48,13 @@ do
         echo Making it executable...
         sudo chmod +x "$dest$(basename "$1")"
 
+    elif [ "$i" == "root_scripts" ]; then
+        dest="/usr/local/bin/"
+        echo Copying to "$dest"...
+        sudo cp "$1" "$dest"
+        echo Making it executable...
+        sudo chmod +x "$dest$(basename "$1")"
+
     else echo "Unrecognized destination: $i"
     fi
 done
