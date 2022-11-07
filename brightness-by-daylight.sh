@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # this is a script to set my external monitor's brightness
 # to high (70%) or low (40%) automatically according to day/night.
@@ -26,7 +26,7 @@
 [ -z "$XDG_CONFIG_HOME" ] && confdir="/home/sintan/.config" || confdir="$XDG_CONFIG_HOME"
 
 # read from the config file
-if test -f $confdir/latlong.toml ; then
+if [ -f $confdir/latlong.toml ]; then
     source $confdir/latlong.toml
 else
     echo "No config file found!"
