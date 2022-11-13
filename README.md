@@ -1,3 +1,4 @@
+![Number of scripts](https://img.shields.io/badge/number_of_scripts-30-blue)
 # Random Scripts
 This repository is for random scripts I wrote mostly for personal use.
 
