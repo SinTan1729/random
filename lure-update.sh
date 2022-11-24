@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# This is to update all apps installed on my server using lure
+# The regular upgrade function of lure doesn't suffice since
+# I use automatically updating version names in my install scripts
+
 [ -f "$1" ] || echo "Please pass location of a list with github repo names"
 
 for f in $(cat "$1" | tr '\n' ' ')
