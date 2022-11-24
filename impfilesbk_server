@@ -44,7 +44,7 @@ rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*'} 
 rsync -aAXH --delete --stats "$HMDIR/.bash_profile" "$BKDIR/dotfiles_server/[dot]bash_profile" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR/dotfiles_server/[dot]bashrc" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 # rsync -aAXH --delete --stats "$HMDIR/.Xresources" "$BKDIR/dotfiles_server/[dot]Xresources" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR/dotfiles/[dot]local_bin_personal/" "$HMDIR/.local/bin/personal/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+# rsync -aAXH --delete --stats "$BKDIR/dotfiles/[dot]local_bin_personal/" "$HMDIR/.local/bin/personal/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.ssh/" "$BKDIR/dotfiles_server/[dot]ssh/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
