@@ -14,6 +14,10 @@ fi
 HMDIR="/home/sintan"
 BKDIR="/mnt/storage/sintan"
 
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+
 echo `date` "| Backing up Documents..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --exclude '*Rust/*/target/' "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
@@ -61,20 +65,89 @@ HMDIR="/mnt/storage/sintan"
 BKDIR="server-rsync:/mnt/storage"
 LGDIR="/home/sintan"
 
+echo `date` "| Pulling pkglists_server to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pulling pkglists_server to SSD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Documents/Backup/pkglists_server/" "$LGDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing the rest of Documents to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --exclude="Backup/pkglists_server" "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing Academics to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing Pictures to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --no-links "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing Zotero to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR/Zotero/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing dotfiles to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/dotfiles/" "$BKDIR/dotfiles/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pulling dotfiles_server to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/dotfiles_server/" "$HMDIR/dotfiles_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pulling Docker related backups to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Programs/Docker/" "$HMDIR/Programs/Docker/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pulling server installer_scripts to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Programs/installer-scripts/" "$HMDIR/Programs/installer-scripts/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing the rest of Programs to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --exclude={"Docker","installer-scripts"} "$HMDIR/Programs/" "$BKDIR/Programs/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pulling important Movies to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Movies/" "$HMDIR/Movies/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing Music to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Music/" "$BKDIR/Music/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo `date` "| Pushing Videos to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Videos/" "$BKDIR/Videos/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo $'\n'"--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
