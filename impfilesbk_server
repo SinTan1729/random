@@ -26,6 +26,10 @@ rsync -aAXH --delete --stats "$HMDIR/Docker/arr/config_sonarr/Backups/" "$BKDIR/
 rsync -aAXH --delete --stats "$HMDIR/Docker/arr/config_prowlarr/Backups/" "$BKDIR/Programs/Docker/arr-backups/prowlarr/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
+echo `date` "| Backing up qBittorrent config..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/qbt+gluetun/qbt-config/" "$BKDIR/Programs/Docker/qBittorrent-config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'`date` "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo `date` "| Backing up simply-shorten database..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
