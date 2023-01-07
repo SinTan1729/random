@@ -1,0 +1,18 @@
+# This fixes the annoying issue of WLAN getting disabled on
+# lid open for HP laptops. Copy this file to /etc/systemd/system/
+# and enable the hp-keycodes service to fix this issue.
+# More at https://askubuntu.com/a/965596/537675
+
+[Unit]
+Description=HP setkeycodes fix
+
+[Service]
+Type=oneshot
+Restart=no
+RemainAfterExit=no
+ExecStart=/usr/bin/setkeycodes e057 240 e058 240
+
+[Install]
+WantedBy=rescue.target
+WantedBy=multi-user.target
+WantedBy=graphical.target
