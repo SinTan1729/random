@@ -4,6 +4,9 @@
 # The regular upgrade function of lure doesn't suffice since
 # I use automatically updating version names in my install scripts
 
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 ! command -v lure>/dev/null && echo "lure is not installed" && exit
 ! [ -f "$1" ] && echo "Please pass location of a list with github repo names" && exit
 
@@ -20,6 +23,6 @@ do
 		echo "Upgrading $pkg ($version_present -> $version_new)"
 		lure install $pkg
 	else
-		echo "$pkg is up-to-date"
+		echo -e "$pkg is ${GREEN}up-to-date${NC}"
 	fi
 done
