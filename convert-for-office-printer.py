@@ -34,10 +34,11 @@ if page_size not in ["a4", "letter"]:
     raise Exception(
         'Unknown paper size! Only supported sizes are A4 and Letter.')
 
-pdf = convert_from_path(filename)
+pdf = convert_from_path(filename, dpi=300)
 
-a4size = int(8.27*300), int(11.7*300)
-lettersize = int(8.5*300), int(11*300)
+dpi = 300
+a4size = int(8.27*dpi), int(11.7*dpi)
+lettersize = int(8.5*dpi), int(11*dpi)
 
 if page_size == "a4":
     new_size = a4size
@@ -49,12 +50,15 @@ pagenum = len(pdf)
 new_pdf = list()
 for i in range(pagenum):
     page = Image.new('L', new_size, 'white')  # The '1' means black and white
+
     old_size = pdf[i].size
     ratio = min(new_size[0]/old_size[0], new_size[1]/old_size[1])
     resize_to = round(old_size[0]*ratio), round(old_size[1]*ratio)
     offset = round((new_size[0]-resize_to[0]) /
                    2), round((new_size[1]-resize_to[1])/2)
     page.paste(pdf[i].resize(resize_to, Image.LANCZOS), offset)
+
+    # We apply a curve to deepen the previously colored strokes
     page_bw = page.point(lambda x: round(x/12) if 16 < x < 192 else x, 'L')
     new_pdf.append(page_bw)
 
@@ -64,6 +68,6 @@ if os.path.isfile(new_filename) and overwrite_status != '-o':
     raise Exception(
         'File '+new_filename+' is already present. Add -o at the end to overwrite')
 
-new_pdf[0].save(new_filename, "PDF", quality=100,
+new_pdf[0].save(new_filename, "PDF", resolution=dpi, quality=100,
                 save_all=True, append_images=new_pdf[1:])
 print('File '+new_filename+' was created.')
