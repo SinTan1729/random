@@ -1,12 +1,14 @@
 #!/bin/bash
 
 # this is a script to set my external monitor's brightness
-# to high (70%) or low (40%) automatically according to day/night.
+# to high (70% is my personal preference) or low (40% is my personal preference)
+# automatically according to day/night.
 # it uses ddcutil to access the monitor's settings and sunwait to know
 # if it's day or night. It expects a file in the following format in
 # the .config directory (the values should be according to location)
 
-# ~/.config/latlong.toml
+## ~/.config/brightness-by-daylight.conf
+## Setup for brightness-by-daylight.sh
 # latitude="0.000000N"
 # longitude="0.000000E"
 # scriptdir=<location-of-this-script>
@@ -23,13 +25,14 @@
 [ "${BRTNESSLOCKER}" != "running" ] && exec env BRTNESSLOCKER="running" flock -en "/tmp/brightness-by-daylight.lock" "$0" "$@" || :
 
 # set location of the config file
-[ -z "$XDG_CONFIG_HOME" ] && confdir="/home/sintan/.config" || confdir="$XDG_CONFIG_HOME"
+[ -z "$XDG_CONFIG_HOME" ] && confdir="$HOME/.config" || confdir="$XDG_CONFIG_HOME"
 
 # read from the config file
-if [ -f $confdir/latlong.toml ]; then
-    source $confdir/latlong.toml
+if [ -f $confdir/brightness-by-daylight.conf ]; then
+    source $confdir/brightness-by-daylight.conf
 else
     echo "No config file found!"
+    echo "It should be located at [config-dir]/brightness-by-daylight.conf"
     exit
 fi
 
@@ -46,7 +49,7 @@ if [ "$1" == "scheduler" ]; then
     # try to figure out if it's twilight right now, then need to adjust sun_status
     [ $sunrise_time == $now_time ] && sun_status="DAY"
     [ $sunset_time == $now_time ] && sun_status="NIGHT"
-    
+
     # figure out the time of the next twilight
     [ $sun_status == "DAY" ] && time_next=$sunset_time || time_next=$sunrise_time
 
@@ -55,13 +58,12 @@ if [ "$1" == "scheduler" ]; then
 
     # loop through all `at` entries to see if a task already exists
     flag=true
-    for item in $task_list
-    do
+    for item in $task_list; do
         [ "$(at -c $item | sed 'x;$!d')" == "$scriptdir/brightness-by-daylight.sh scheduler" ] && flag=false
     done
 
     # create the schedule
-    $flag && at -m $time_next <<< "$scriptdir/brightness-by-daylight.sh scheduler"
+    $flag && at -m $time_next <<<"$scriptdir/brightness-by-daylight.sh scheduler"
 fi
 
 # do the brightness adjustment using ddcutil
