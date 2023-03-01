@@ -9,11 +9,11 @@ for f in *.mp4; do
         h=$(basename "$f" .mp4)
         echo "Renaming the subtitle (if any) accompanying $h.mp4..."
         n=$(find . -maxdepth 2 -name "*.srt" -printf '.' | wc -m)
-        if [ $n -eq 1 ] && ! [ -f $h.srt ]; then
-            find . -maxdepth 2 -name "*.srt" -exec mv {} $h.srt \;
+        if [ $n -eq 1 ] && ! [ -f "$h.srt" ]; then
+            find . -maxdepth 2 -name "*.srt" -exec mv "{}" "$h.srt" \;
             echo "Done!"
         else
-            echo "Unable to find unique srt file that needs to be renamed."
+            echo "Unable to find unique srt file that needs to be renamed. It might already have the proper name."
         fi
     fi
 done
