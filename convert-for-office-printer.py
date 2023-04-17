@@ -11,6 +11,7 @@ import sys
 import os
 from pdf2image import convert_from_path
 from PIL import Image
+from tqdm import tqdm
 
 if len(sys.argv) < 3:
     raise Exception(
@@ -48,9 +49,8 @@ else:
 pagenum = len(pdf)
 
 new_pdf = list()
-for i in range(pagenum):
-    page = Image.new('L', new_size, 'white')  # The '1' means black and white
-
+for i in tqdm(range(pagenum)):
+    page = Image.new('L', new_size, 'white')
     old_size = pdf[i].size
     ratio = min(new_size[0]/old_size[0], new_size[1]/old_size[1])
     resize_to = round(old_size[0]*ratio), round(old_size[1]*ratio)
