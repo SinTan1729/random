@@ -5,7 +5,7 @@
 # It makes the subs discoverable by virtually any video player.
 # Optionally takes a language arguments e.g. en to rename to .en.srt
 
-for f in *.mp4; do
+for f in *.mp4 *.mkv; do
     if [ -f "$f" ]; then
         h=$(basename "$f" .mp4)
         echo "Renaming the subtitle (if any) accompanying $h.mp4..."
