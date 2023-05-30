@@ -24,7 +24,7 @@ updpkgsums
 makepkg --printsrcinfo >.SRCINFO
 
 # Remove downloaded files
-ls | grep -v PKGBUILD | xargs -r -I {} rm "{}"
+ls | grep -v PKGBUILD | xargs -r -I {} rm -i "{}"
 git add .
 git commit -m "Bumped $PKG version to $VERS"
 git push
@@ -46,7 +46,7 @@ sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" lure.sh
 update-lure-checksums.py
 
 # Remove downloaded files
-ls | grep -v lure.sh | xargs -r -I {} rm "{}"
+ls | grep -v lure.sh | xargs -r -I {} rm -i "{}"
 git add .
 git commit -m "Bumped $PKG version to $VERS"
 git push
