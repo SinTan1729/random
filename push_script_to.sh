@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # this is a script to push scripts from the folder with git
 # to actual locations where I use them
@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
     echo "Provide a script or pass --help to see syntax"
     exit
 
-elif [ "$1" == "--help" ];then
+elif [ "$1" == "--help" ]; then
     echo "The syntax is as follows:"$'\n'"push_script_to <script-location> <destination> (additional destinations separated by space)"
     exit
 
@@ -18,8 +18,7 @@ fi
 
 [ -z "$2" ] && echo "Provide destination(s) or pass --help to see syntax" && exit
 
-for i in "${@:2}"
-do
+for i in "${@:2}"; do
     if [ "$i" == "personal_script_dir" ]; then
         dest="/home/sintan/.local/bin/personal/"
         echo Copying to "$dest"...
@@ -33,7 +32,7 @@ do
         sudo cp "$1" "$dest"
         echo Making it executable...
         sudo chmod +x "$dest$(basename "$1")"
-        
+
     elif [ "$i" == "cron_weekly" ]; then
         dest="/etc/cron.weekly/"
         echo Copying to "$dest"...
@@ -55,6 +54,8 @@ do
         echo Making it executable...
         sudo chmod +x "$dest$(basename "$1")"
 
-    else echo "Unrecognized destination: $i"
+    else
+        echo "Unrecognized destination: $i"
+        echo "Available destinations are: personal_script_dir, cron_daily, cron_weekly, cron_monthly, root_scripts"
     fi
 done
