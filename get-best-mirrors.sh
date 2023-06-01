@@ -6,19 +6,27 @@
 # I run it weekly using anacron.
 
 update_arch() {
+    # Create temporary file to output to
+    TMPFILE_ARCH="$(mktemp)"
+
     # Rank Arch mirrors
     echo "===================================================================================================="
     echo "Ranking Arch mirrors"
     echo "===================================================================================================="
 
     rate-mirrors --protocol=https --save=$TMPFILE_ARCH arch
+
+    # Create backup directory if not present already
+    sudo mkdir -p /etc/pacman.d/mirrorlist-backup
+
+    # Place the new mirrorlist and do a backup
     sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup/mirrorlist.$TIME
     sudo mv $TMPFILE_ARCH /etc/pacman.d/mirrorlist
 }
 
 update_eos() {
-    # Remove files created by eos-rankmirror, if any
-    sudo find /etc/pacman.d/ -maxdepth 1 -type f -name "endeavouros-mirrorlist\.*" -exec rm -v {} \;
+    # Create temporary file to output to
+    TMPFILE_EOS="$(mktemp)"
 
     # Rank EndeavourOS mirrors
     echo $'\n'"===================================================================================================="
@@ -26,19 +34,20 @@ update_eos() {
     echo "===================================================================================================="
 
     rate-mirrors --protocol=https --save=$TMPFILE_EOS endeavouros
+
+    # Create backup directory if not present already
+    sudo mkdir -p /etc/pacman.d/mirrorlist-backup
+
+    # Place the new mirrorlist and do a backup
     sudo mv /etc/pacman.d/endeavouros-mirrorlist /etc/pacman.d/mirrorlist-backup/endeavouros-mirrorlist.$TIME
     sudo mv $TMPFILE_EOS /etc/pacman.d/endeavouros-mirrorlist
-}
 
-# Create temporary files to output to
-TMPFILE_ARCH="$(mktemp)"
-TMPFILE_EOS="$(mktemp)"
+    # Remove files created by eos-rankmirror, if any
+    sudo find /etc/pacman.d/ -maxdepth 1 -type f -name "endeavouros-mirrorlist\.*" -exec rm -v {} \;
+}
 
 # Get the current time
 TIME="$(date '+%Y.%m.%d-%H.%M.%S')"
-
-# Create backup directory if not present already
-sudo mkdir -p /etc/pacman.d/mirrorlist-backup
 
 if [ "$1" == "arch" ]; then
     update_arch
