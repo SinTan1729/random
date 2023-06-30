@@ -32,15 +32,8 @@ echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Backing up simply-shorten database..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Docker/simply-shorten/urls.sqlite" "$BKDIR/Programs/Docker/simply-shorten-backup.sqlite" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-
 echo $(date) "| Backing up wikijs database..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Docker/wikijs/database.sqlite" "$BKDIR/Programs/Docker/wikijs/database.sqlite" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Docker/wikijs/storage/" "$BKDIR/Programs/Docker/wikijs/storage/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/wikijs/storage/" "$BKDIR/Programs/wikijs-storage/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
