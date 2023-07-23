@@ -8,6 +8,7 @@
 if [ "$#" -ne 2 ]; then
     echo "Invalid syntax!"
     echo "Use the following syntax: update-aur-lure.sh <package-name> <new-version>"
+    exit -1
 fi
 
 # xdg-user-dirs is used to get the directory for the repos
