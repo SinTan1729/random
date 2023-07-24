@@ -34,6 +34,12 @@ echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
+echo $(date) "| Backing up SearXNG config..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/searxng/searxng/" "$BKDIR/Programs/Docker/searxng-config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
 echo $(date) "| Backing up Jellyfin config..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Docker/jellyfin/config/" "$BKDIR/Programs/Docker/jellyfin-config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
