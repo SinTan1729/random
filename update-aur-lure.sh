@@ -33,7 +33,7 @@ git push
 # Update the GitHub backup repo as well
 echo "Updating AUR backup repo..."
 cd "$GIT_DIR/AUR Mirror GitHub/$PKG"
-sed -i -E "s/version=[0-9\.]+/version=$VERS/" PKGBUILD
+sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
 git add .
 git commit -m "Bumped $PKG version to $VERS"
 git push
@@ -43,7 +43,7 @@ echo "Updating LURE repo..."
 cd "$GIT_DIR/lure-repo/"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
 cd "$PKG"
-sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" lure.sh
+sed -i -E "s/version=[0-9\.]+/version=$VERS/" lure.sh
 update-lure-checksums.py
 
 # Remove downloaded files
