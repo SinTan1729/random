@@ -4,7 +4,7 @@
 
 echo 'ipv4:'
 for i in eth0 eno1 wlan0; do
-    $(ip -4 addr | grep -q $i) || continue
+    $(ip -4 addr | grep -q " $i:") || continue
     addr="$(ip -4 addr show dev $i | grep -oP '(?<=inet\s)\d+(\.\d+){3}')"
     [ -z "$addr" ] || echo -e "\t$i: \t\t$addr"
 done
@@ -15,7 +15,7 @@ echo -e "\texternal: \t${addr:-n/a}"
 
 echo 'ipv6:'
 for i in eth0 eno1 wlan0; do
-    $(ip -6 addr | grep -q $i) || continue
+    $(ip -6 addr | grep -q " $i:") || continue
     addr="$(ip -6 addr show dev $i | grep -oP '(?<=inet6\s)\w+(\:{1,2}\w+){4}(?=.+link)')"
     [ -z "$addr" ] || echo -e "\t$i: \t\t$addr"
 done
