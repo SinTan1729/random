@@ -37,7 +37,7 @@ for file in args['filename']:
         elif w == 'max':
             outw = max([pages[i].mediabox.width for i in range(len(pages))])
         else:
-            outw = w
+            outw = float(w)
         writer = PdfWriter()
         for page in pages:
             dim = page.mediabox
