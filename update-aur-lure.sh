@@ -17,9 +17,10 @@ VERS="$2"
 
 # Do the updates for AUR
 echo "Updating AUR..."
+cd "$GIT_DIR/AUR"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
 
-cd "$GIT_DIR/AUR/$PKG"
+cd "$PKG"
 sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
 updpkgsums
 makepkg --printsrcinfo >.SRCINFO
@@ -40,7 +41,7 @@ git push
 
 # Do the updates for LURE
 echo "Updating LURE repo..."
-cd "$GIT_DIR/lure-repo/"
+cd "$GIT_DIR/lure-repo"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
 cd "$PKG"
 sed -i -E "s/version=[0-9\.]+/version=$VERS/" lure.sh
