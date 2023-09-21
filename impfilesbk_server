@@ -41,6 +41,12 @@ echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Backing up Caddyfile..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/ryot/postgres_storage/" "$BKDIR/Programs/Docker/ryot_postgres_storage/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo $(date) "| Backing up Caddyfile..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Docker/cloudflared/config/" "$BKDIR/Programs/Docker/cloudflared-config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
