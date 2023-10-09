@@ -25,6 +25,9 @@ for x in files:
     if os.path.isfile(basename+'.srt'):
         os.rename(path+'/'+basename+'.srt', path +
                   '/'+basename+'/'+basename+'.srt')
+    if os.path.isfile(basename+'.en.srt'):
+        os.rename(path+'/'+basename+'.en.srt', path +
+                  '/'+basename+'/'+basename+'.en.srt')
     ctr += 1
 
 print(str(ctr)+' folder(s) created.')
