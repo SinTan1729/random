@@ -138,8 +138,8 @@ echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pushing Music to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Music/" "$BKDIR/Music/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Pulling Music from server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$BKDIR/Music/" "$HMDIR/Music/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
