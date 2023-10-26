@@ -8,10 +8,10 @@
 name="$1"
 
 if [ "$3" == "add" ]; then
-    message="The torrent '$name' has been added."
+    message="Added: $name"
 elif [ "$3" == "fin" ]; then
     size="$(echo $2 | numfmt --to=iec --format %.2f)B"
-    message="The torrent '$name' ($size) has finished downloading."
+    message="Finished: [$size] $name"
 else
     exit
 fi
