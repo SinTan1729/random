@@ -7,7 +7,7 @@
 
 for f in *.mp4 *.mkv; do
     if [ -f "$f" ]; then
-        h=$(basename "$f" .mp4)
+        h="${f%.*}"
         echo "Renaming the subtitle (if any) accompanying $h.mp4..."
         n=$(find . -maxdepth 2 -name "*.srt" -printf '.' | wc -m)
         if [ $n -eq 1 ] && ! [ -f "$h.srt" ]; then
