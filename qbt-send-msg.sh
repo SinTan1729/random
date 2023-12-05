@@ -19,9 +19,9 @@ elif [ "$3" == "fin" ]; then
             cp -l "$item" ../Temp/
             cd ../Temp/
             old=$(ls)
-            movie-rename -l *
+            ../.config/movie-rename -l *
             new=$(ls)
-            folderify.py
+            ../.config/folderify.py
             [ "$old" != "$new" ] && mv * ../Movies/
         fi
 
@@ -30,11 +30,12 @@ elif [ "$3" == "fin" ]; then
             cd ../Temp/
             cd *
             find . -name "*.srt" | tail -n 1 | xargs -I{} mv {} .
-            rename-subs en
+            ../.config/rename-subs en
             find . -type d -exec rm -rf "{}" \;
             find . \! \( -name "*.mp4" -o -name "*.srt" -o -name "*.mkv" \) -exec rm -f "{}" \;
             old=$(ls)
-            movie-rename -ld "$item"
+            cd ..
+            ../.config/movie-rename -ld "$item"
             new=$(ls)
             [ "$old" != "$new" ] && mv * ../Movies/
         fi
