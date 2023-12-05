@@ -12,12 +12,39 @@ if [ "$3" == "add" ]; then
 elif [ "$3" == "fin" ]; then
     size="$(echo $2 | numfmt --to=iec --format %.2f)B"
     message="Finished: [$size] $name"
+    
+    if [ "$4" == "movie" ]; then
+        item=${5/\/downloads\//\.\.\/}
+        if [ -f "$item" ]; then
+            cp -l "$item" ../Temp/
+            cd ../Temp/
+            old=$(ls)
+            movie-rename -l *
+            new=$(ls)
+            folderify.py
+            [ "$old" != "$new" ] && mv * ../Movies/
+        fi
+
+        if [ -d "$item" ]; then
+            cp -lr "$item" ../Temp/
+            cd ../Temp/
+            cd *
+            find . -name "*.srt" | tail -n 1 | xargs -I{} mv {} .
+            rename-subs en
+            find . -type d -exec rm -rf "{}" \;
+            find . \! \( -name "*.mp4" -o -name "*.srt" -o -name "*.mkv" \) -exec rm -f "{}" \;
+            old=$(ls)
+            movie-rename -ld "$item"
+            new=$(ls)
+            [ "$old" != "$new" ] && mv * ../Movies/
+        fi
+    fi
 else
-    exit
+   exit
 fi
 
 curl -H "Icon: https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/New_qBittorrent_Logo.svg/240px-New_qBittorrent_Logo.svg.png" \
-    -H "Title: qBittorrent" \
-    -H "Priority: low" \
-    -d "$message" \
-    https://ntfy.sh/topic-name
+     -H "Title: qBittorrent" \
+     -H "Priority: low" \
+     -d "$message" \
+     https://ntfy.sh/topic-name
