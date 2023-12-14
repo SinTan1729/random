@@ -14,6 +14,7 @@ elif [ "$3" == "fin" ]; then
     message="Finished: [$size] $name"
     
     if [ "$4" == "movie" ]; then
+        cd /downloads/.config/
         item=${5/\/downloads\//\.\.\/}
         if [ -f "$item" ]; then
             cp -l "$item" ../Temp/
