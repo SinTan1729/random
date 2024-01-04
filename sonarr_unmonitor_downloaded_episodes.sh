@@ -33,4 +33,4 @@ fi
 curl -s -H "X-Api-Key: $sonarr_api_token" \
     -X PUT "http://$sonarr_ip:$sonarr_port/api/v3/episode/monitor" \
     -H 'Content-Type: application/json' \
-    -d "{'episodeIds': [$sonarr_episodefile_episodeids], 'monitored': false}"
+    -d '{"episodeIds": ['$sonarr_episodefile_episodeids'], "monitored": false}'
