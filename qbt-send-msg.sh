@@ -12,35 +12,6 @@ if [ "$3" == "add" ]; then
 elif [ "$3" == "fin" ]; then
     size="$(echo $2 | numfmt --to=iec --format %.2f)B"
     message="Finished: [$size] $name"
-    
-    if [ "$4" == "movie" ]; then
-        cd /downloads/.config/
-        item=${5/\/downloads\//\.\.\/}
-        if [ -f "$item" ]; then
-            cp -l "$item" ../Temp/
-            cd ../Temp/
-            old=$(ls)
-            ../.config/movie-rename -l *
-            new=$(ls)
-            ../.config/folderify.py
-            [ "$old" != "$new" ] && mv * ../Movies/
-        fi
-
-        if [ -d "$item" ]; then
-            cp -lr "$item" ../Temp/
-            cd ../Temp/
-            cd *
-            find . -name "*.srt" | tail -n 1 | xargs -I{} mv {} .
-            ../.config/rename-subs en
-            find . -type d -exec rm -rf "{}" \;
-            find . \! \( -name "*.mp4" -o -name "*.srt" -o -name "*.mkv" \) -exec rm -f "{}" \;
-            old=$(ls)
-            cd ..
-            ../.config/movie-rename -ld "$item"
-            new=$(ls)
-            [ "$old" != "$new" ] && mv * ../Movies/
-        fi
-    fi
 else
    exit
 fi
