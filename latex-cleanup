@@ -7,7 +7,7 @@
 
 if [ "$1" = "--delete" ]; then
     read -p "Warning: Deleting instead of trashing. Continue? [y/N]: " resp
-    if [ $resp != "y" ] && [ $resp != "Y" ]; then
+    if [ "$resp" != "y" ] && [ "$resp" != "Y" ]; then
         exit
     fi
     d=1
@@ -21,8 +21,8 @@ for f in *.tex; do
         h=$(basename "$f" .tex)
         echo "Removing files accompanying $h.tex..."
         for g in "$h".*; do
-            k=$( echo $g | sed 's/^.*\.//')
-            if [ "$k" != "tex" ] && [ "$k" != "pdf" ] && [ "$k" != "bib" ] ; then
+            k=$(echo $g | sed 's/^.*\.//')
+            if [ "$k" != "tex" ] && [ "$k" != "pdf" ] && [ "$k" != "bib" ]; then
                 echo "Removing $g..."
                 [ $d -eq 0 ] && trash "$g" || rm "$g"
             fi
