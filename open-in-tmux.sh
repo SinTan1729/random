@@ -13,5 +13,4 @@ tmux list-panes -s -F '#{window_id} #{pane_id} #{pane_current_path} #{pane_curre
         && tmux select-pane -t "$pane" && tmux select-window -t "$window" && exit 0
 done || tmux new-window -c "$target_path"
 
-tmux new -As0
-
+tmux attach -d
