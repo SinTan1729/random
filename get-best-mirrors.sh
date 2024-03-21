@@ -14,7 +14,7 @@ update_arch() {
     echo "Ranking Arch mirrors"
     echo "===================================================================================================="
 
-    rate-mirrors --protocol=https --save=$TMPFILE_ARCH arch
+    sudo -u sintan rate-mirrors --protocol=https --save=$TMPFILE_ARCH arch
 
     # Create backup directory if not present already
     sudo mkdir -p /etc/pacman.d/mirrorlist-backup
@@ -33,7 +33,7 @@ update_eos() {
     echo "Ranking EndeavourOS mirrors"
     echo "===================================================================================================="
 
-    rate-mirrors --protocol=https --save=$TMPFILE_EOS endeavouros
+    sudo -u sintan rate-mirrors --protocol=https --save=$TMPFILE_EOS endeavouros
 
     # Create backup directory if not present already
     sudo mkdir -p /etc/pacman.d/mirrorlist-backup
