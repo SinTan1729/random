@@ -30,6 +30,12 @@ echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
+echo $(date) "| Backing up Code..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+
 echo $(date) "| Backing up Pictures..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
@@ -86,6 +92,12 @@ echo "--------------------------------------------------" | tee -a "$LGDIR/TempS
 
 echo $(date) "| Pushing Academics to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo $(date) "| Pushing Code to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
