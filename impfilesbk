@@ -19,7 +19,7 @@ echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$HMDIR/TempS
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Backing up Documents..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --exclude '*Rust/*/target/' "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
@@ -31,7 +31,7 @@ echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Backing up Code..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "--exclude '*Rust/*/target/' $HMDIR/Code/" "$BKDIR/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
