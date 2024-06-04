@@ -45,7 +45,7 @@ rsync -aAXH --delete --stats "$HMDIR/Docker/cloudflared/config/" "$BKDIR/Program
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Backing up gpodder2go config..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Docker/gpodder/g2g.db" "$BKDIR/Programs/Docker/gpodder2go-data.db" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/gpodder/data/" "$BKDIR/Programs/Docker/gpodder2go-data/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
