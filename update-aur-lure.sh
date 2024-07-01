@@ -11,13 +11,13 @@ if [ "$#" -ne 2 ]; then
     exit -1
 fi
 
-# xdg-user-dirs is used to get the directory for the repos
-GIT_DIR=$(xdg-user-dir DOCUMENTS)/git
+# GITDIR env variable should be set for this to work
+[ -z $GITDIR ] && exit -1
 VERS="$2"
 
 # Do the updates for AUR
 echo "Updating AUR..."
-cd "$GIT_DIR/AUR"
+cd "$GITDIR/AUR"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
 
 cd "$PKG"
@@ -33,7 +33,7 @@ git push
 
 # Update the GitHub backup repo as well
 echo "Updating AUR backup repo..."
-cd "$GIT_DIR/AUR Mirror GitHub/$PKG"
+cd "$GITDIR/AUR Mirror GitHub/$PKG"
 sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
 git add .
 git commit -m "Bumped $PKG version to $VERS"
@@ -41,7 +41,7 @@ git push
 
 # Do the updates for LURE
 echo "Updating LURE repo..."
-cd "$GIT_DIR/lure-repo"
+cd "$GITDIR/lure-repo"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
 cd "$PKG"
 sed -i -E "s/version=[0-9\.]+/version=$VERS/" lure.sh
