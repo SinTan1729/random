@@ -4,7 +4,7 @@
 # don't work with custom resolvconf setups
 
 # Get the DNS resolver provided by the network
-DNS=$(nmcli -f IP4.DNS dev show wlan0 | awk '{print $2}')
+DNS=$(nmcli -f IP4.DNS dev show wlan0 | awk '{print $2}' | head -1)
 
 # Temporarily put the DNS resolver in place
 echo "Need sudo permission to work with /etc/resolv.conf"
