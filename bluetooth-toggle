@@ -1,13 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
 # Toggles bluetooth on a Linux system. Make sure that you have bluetoothctl installed.
 # I use it with a shortcut.
+#
 
-if [ $(bluetoothctl show | grep Powered | grep -c yes) -eq 1 ]; then
-	bluetoothctl power off
+BLUETOOTH_DEVICE=$(bluetoothctl list | grep dongle | awk '{print $2}')
+if [ -z $BLUETOOTH_DEVICE ]; then
+    BLUETOOTH_DEVICE=$(bluetoothctl list | head -1 | awk '{print $2}')
 else
-	if [ $(rfkill --output-all | grep bluetooth | grep -c blocked) -ne 0 ]; then
+    BLUETOOTH_DEVICE_OTHER=$(bluetoothctl list | grep internal | awk '{print $2}')
+	echo -e "select $BLUETOOTH_DEVICE_OTHER\npower off" | bluetoothctl
+fi
+
+if [ $(bluetoothctl show $BLUETOOTH_DEVICE | grep Powered | grep -c yes) == 1 ]; then
+	echo -e "select $BLUETOOTH_DEVICE\npower off" | bluetoothctl
+else
+	if [ $(rfkill --output-all | grep bluetooth | grep -c blocked) != 0 ]; then
 		rfkill unblock bluetooth
 	fi
-	bluetoothctl power on
+	echo -e "select $BLUETOOTH_DEVICE\npower on" | bluetoothctl
 fi
