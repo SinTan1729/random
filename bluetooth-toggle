@@ -11,7 +11,6 @@ if [ -z $DONGLE_MAC ]; then
     DEVICE_MAC=$INTERNAL_MAC
 else
     DEVICE_MAC=$DONGLE_MAC
-	echo -e "select $INTERNAL_MAC\npower off" | bluetoothctl
 fi
 
 if [ $(bluetoothctl show $DEVICE_MAC | grep Powered | grep -c yes) == 1 ]; then
@@ -22,3 +21,9 @@ else
 	fi
 	echo -e "select $DEVICE_MAC\npower on" | bluetoothctl
 fi
+
+if ! [ -z $DONGLE_MAC ]; then
+    sleep 0.5
+	echo -e "select $INTERNAL_MAC\npower off" | bluetoothctl
+fi
+
