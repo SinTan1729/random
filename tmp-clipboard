@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This script just puts the piped text to a temp file
+# Using the get-remote-tmp-clipboard script, we can retrieve it from another machine.
+
+cat >/tmp/.tmp-clipboard
+
