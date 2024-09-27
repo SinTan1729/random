@@ -73,6 +73,11 @@ HMDIR="/mnt/storage/sintan"
 BKDIR="server-rsync:/mnt/storage"
 LGDIR="/home/sintan"
 
+if ! $(ping server-ts -nqc 1 -W 1 >/dev/null 2>&1); then
+    echo "Remote machine not available. Exiting..."
+    exit 1
+fi
+
 echo $(date) "| Pulling pkglists_server to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
