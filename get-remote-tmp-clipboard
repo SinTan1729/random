@@ -4,4 +4,4 @@
 # You need to pass a hostname to this script as an argument, and the script
 # will pull the text saved by the remote machine's tmp-clipboard script
 
-ssh $* 'cat /tmp/.tmp-clipboard; >$_' | wl-copy
+ssh $* 'cat /tmp/tmp-clipboard; >$_' | wl-copy
