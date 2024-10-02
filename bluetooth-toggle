@@ -2,7 +2,6 @@
 
 # Toggles bluetooth on a Linux system. Make sure that you have bluetoothctl installed.
 # I use it with a shortcut.
-#
 
 DONGLE_MAC=$(bluetoothctl list | grep dongle | awk '{print $2}')
 INTERNAL_MAC=$(bluetoothctl list | grep internal | awk '{print $2}')
