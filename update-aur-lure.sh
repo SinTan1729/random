@@ -19,17 +19,19 @@ VERS="$2"
 echo "Updating AUR..."
 cd "$GITDIR/AUR"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
-
-cd "$PKG"
-sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
-updpkgsums
-makepkg --printsrcinfo >.SRCINFO
-
-# Remove downloaded files
-ls | grep -v PKGBUILD | xargs -r -I {} rm "{}"
-git add .
-git commit -m "Bumped $PKG version to $VERS"
-git push
+if [ -d "$1" ]; then # Skip if the directory is missing
+    cd "$PKG"
+    sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
+    updpkgsums
+    makepkg --printsrcinfo >.SRCINFO
+    # Remove downloaded files
+    ls | grep -v PKGBUILD | xargs -r -I {} rm "{}"
+    git add .
+    git commit -m "Bumped $PKG version to $VERS"
+    git push
+else
+    echo "AUR directory is missing. Skipping this step."
+fi
 
 # Update the GitHub backup repo as well
 echo "Updating AUR backup repo..."
