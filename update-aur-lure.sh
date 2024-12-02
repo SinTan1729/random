@@ -5,6 +5,9 @@
 
 # Syntax: update-aur-lure.sh <package-name> <new-version>
 
+# Exit the whole script when ctrl+c is pressed
+set -e
+
 if [ "$#" -ne 2 ]; then
     echo "Invalid syntax!"
     echo "Use the following syntax: update-aur-lure.sh <package-name> <new-version>"

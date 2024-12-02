@@ -8,6 +8,9 @@ if [ "$(id -u)" -eq 0 ]; then
     exec sudo -H -u sintan $0 "$@"
 fi
 
+# Exit the whole script when ctrl+c is pressed
+set -e
+
 # Run only one instance of this script at one time
 [ "${BKLOCKER}" != "running" ] && exec env BKLOCKER="running" flock -en "/tmp/impfilesbk.lock" "$0" "$@" || :
 
