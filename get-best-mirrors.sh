@@ -5,6 +5,9 @@
 # Syntax get-best-mirrors.sh <arch|eos|both> (nothing means both)
 # I run it weekly using anacron.
 
+# Exit the whole script when ctrl+c is pressed
+set -e
+
 update_arch() {
     # Create temporary file to output to
     TMPFILE_ARCH="$(mktemp)"
