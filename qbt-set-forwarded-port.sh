@@ -9,8 +9,9 @@ set -e
 qbt_username="${QBT_USERNAME:-admin}"
 qbt_password="${QBT_PASSWORD:-adminadmin}"
 qbt_addr="${QBT_ADDR:-http://localhost:8085}" # ex. http://10.0.1.48:8080
+gluetun_container="${GLUETUN_COMTAINER:-'qbt-gluetun'}"
 
-port_number=$(docker exec -it qbt-gluetun cat /tmp/gluetun/forwarded_port)
+port_number=$(docker exec "$gluetun_container" cat /tmp/gluetun/forwarded_port)
 
 if [ -z "$port_number" ]; then
     echo "Could not figure out which port to set."
