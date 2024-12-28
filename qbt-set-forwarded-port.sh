@@ -19,7 +19,7 @@ fi
 wget --save-cookies=/tmp/cookies.txt --keep-session-cookies --header="Referer: $qbt_addr" --header="Content-Type: application/x-www-form-urlencoded" \
   --post-data="username=$qbt_username&password=$qbt_password" --output-document /dev/null --quiet "$qbt_addr/api/v2/auth/login"
 
-listen_port=$(wget --load-cookies=/tmp/cookies.txt --output-document - --quiet "$qbt_addr/api/v2/app/preferences" | grep -Eo '"listen_port":([0-9]+)' | awk -F: '{print $2}')
+listen_port=$(wget --load-cookies=/tmp/cookies.txt --output-document - --quiet "$qbt_addr/api/v2/app/preferences" | grep -Eo '"listen_port":[0-9]+' | awk -F: '{print $2}')
 
 if [ ! "$listen_port" ]; then
     echo "Could not get current listen port, exiting..."
