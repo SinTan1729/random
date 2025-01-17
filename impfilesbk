@@ -7,6 +7,11 @@ if [ "$(id -u)" -eq 0 ]; then
     exec sudo -H -u sintan $0 "$@"
 fi
 
+if ! $(ping server-ts -nqc 1 -W 1 >/dev/null 2>&1); then
+    echo "Remote machine not available. Exiting..."
+    exit 1
+fi
+
 # Exit the whole script when ctrl+c is pressed
 set -e
 
@@ -15,158 +20,76 @@ set -e
 
 # Setup location for home and backup directory
 HMDIR="/home/sintan"
-BKDIR="/mnt/storage/sintan"
-
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Backing up Documents..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Backing up Academics..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Backing up Code..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --exclude '*/*/target/' --exclude 'git/*/lake-packages/' \
-        --exclude 'git/*/build/' "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Backing up Pictures..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-# echo `date` "| Backing up PhotoPrism index..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-# rsync -aAXH --delete --stats "$HMDIR/PhotoPrism/storage/index-backup.sql" "$BKDIR/Programs/photoprism-backup.sql" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-# echo $'\n'`date` "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-# echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Backing up Zotero..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR/Zotero/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Backing up some dotfiles..." | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*','*autosave*','chromium','Code','Code - OSS','discord','vivaldi','Ferdium/Partitions'} \
-    --delete-excluded "$HMDIR/.config/" "$BKDIR/dotfiles/[dot]config/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/.profile" "$BKDIR/dotfiles/[dot]profile" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR/dotfiles/[dot]bashrc" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/.Xresources" "$BKDIR/dotfiles/[dot]Xresources" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/.local/bin/personal/" "$BKDIR/dotfiles/[dot]local_bin_personal/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/.ssh/" "$BKDIR/dotfiles/[dot]ssh/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-echo $'\n'"--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo "NOW SYNCING UP WITH THE SERVER" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-echo "--------------------------------------------------" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-
-HMDIR="/mnt/storage/sintan"
 BKDIR="server-rsync:/mnt/storage"
 LGDIR="/home/sintan"
 
-if ! $(ping server-ts -nqc 1 -W 1 >/dev/null 2>&1); then
-    echo "Remote machine not available. Exiting..."
-    exit 1
-fi
-
-echo $(date) "| Pulling pkglists_server to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pulling pkglists_server to SSD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Documents/Backup/pkglists_server/" "$LGDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Pushing the rest of Documents to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --exclude="Backup/pkglists_server" "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Pushing Academics to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Backing up Academics..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pushing Code to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Backing up Code..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --exclude '*/*/target/' --exclude 'git/*/lake-packages/' \
+        --exclude 'git/*/build/' "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pushing Pictures to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --no-links "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Backing up Pictures..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pushing Zotero to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Backing up Videos..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Videos/" "$BKDIR/Videos/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+
+echo $(date) "| Backing up Zotero..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR/Zotero/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pushing dotfiles to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/dotfiles/" "$BKDIR/dotfiles/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Backing up some dotfiles..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*','*autosave*','chromium','Code','Code - OSS','discord','vivaldi','Ferdium/Partitions'} \
+    --delete-excluded "$HMDIR/.config/" "$BKDIR/dotfiles/[dot]config/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.profile" "$BKDIR/dotfiles/[dot]profile" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR/dotfiles/[dot]bashrc" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.Xresources" "$BKDIR/dotfiles/[dot]Xresources" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.local/bin/personal/" "$BKDIR/dotfiles/[dot]local_bin_personal/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/.ssh/" "$BKDIR/dotfiles/[dot]ssh/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pulling dotfiles_server to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR/dotfiles_server/" "$HMDIR/dotfiles_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Pulling pkglists_server from server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$BKDIR/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pulling Docker related backups to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR/Programs/Docker/" "$HMDIR/Programs/Docker/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Backing up Documents..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Documents/" "$BKDIR/Documents/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Pulling server installer_scripts to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR/Programs/installer-scripts/" "$HMDIR/Programs/installer-scripts/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Pushing the rest of Programs to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --exclude={"Docker","installer-scripts"} "$HMDIR/Programs/" "$BKDIR/Programs/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Pulling important Movies to HDD..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR/Movies/" "$HMDIR/Movies/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+echo $(date) "| Pulling Programs from server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$BKDIR/Programs/" "$HMDIR/Programs/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Pulling Music from server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$BKDIR/Music/" "$HMDIR/Music/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo $(date) "| Pushing Videos to server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Videos/" "$BKDIR/Videos/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
