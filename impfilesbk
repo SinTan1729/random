@@ -27,12 +27,6 @@ echo "--------------------------------------------------" | tee -a "$LGDIR/TempS
 echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
-echo $(date) "| Backing up Academics..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR/Academics/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
-echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-
 echo $(date) "| Backing up Code..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --exclude '*/*/target/' --exclude 'git/*/lake-packages/' \
         --exclude 'git/*/build/' "$HMDIR/Code/" "$BKDIR/Code/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
