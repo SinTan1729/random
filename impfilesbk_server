@@ -72,6 +72,12 @@ echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
+echo $(date) "| Backing up Pictures..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --prune-empty-dirs -f '- /*/*/' "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
+echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+
 echo $(date) "| Backing up some dotfiles..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*'} --delete-excluded "$HMDIR/.config/" "$BKDIR/dotfiles_server/[dot]config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.bash_profile" "$BKDIR/dotfiles_server/[dot]bash_profile" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
