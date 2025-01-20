@@ -74,6 +74,7 @@ echo "--------------------------------------------------" | tee -a "$BKDIR/TempS
 
 echo $(date) "| Backing up Pictures..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats --prune-empty-dirs -f '- /*/*/' "$HMDIR/Pictures/" "$BKDIR/Pictures/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats --prune-empty-dirs -f '- /*/*/' "$HMDIR/TempStorage/DCIM/" "$BKDIR/TempStorage/DCIM/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
