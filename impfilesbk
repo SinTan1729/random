@@ -54,7 +54,7 @@ echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Backing up some dotfiles..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*','*autosave*','chromium','Code','Code - OSS','discord','vivaldi','Ferdium/Partitions'} \
+rsync -aAXH --delete --stats --quiet --no-links --exclude={'*cache*','*Cache*','*autosave*','Signal','chromium','Code','Code - OSS','discord','vivaldi','Ferdium/Partitions'} \
     --delete-excluded "$HMDIR/.config/" "$BKDIR_HDD/dotfiles/[dot]config/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.profile" "$BKDIR_HDD/dotfiles/[dot]profile" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/.bashrc" "$BKDIR_HDD/dotfiles/[dot]bashrc" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
