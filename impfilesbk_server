@@ -105,5 +105,5 @@ echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$BKDIR/TempS
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 # Make the new files visible over samba
-chcon -R -t samba_share_t /mnt/storage/Programs/
-chcon -R -t samba_share_t /mnt/storage/dotfiles_server/
+# chcon -R -t samba_share_t /mnt/storage/Programs/
+# chcon -R -t samba_share_t /mnt/storage/dotfiles_server/
