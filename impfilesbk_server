@@ -101,24 +101,25 @@ rsync -aAXH --delete --stats "$HMDIR/.ssh/" "$BKDIR/dotfiles/server/[dot]ssh/" |
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-echo "--- Now backing up to the DAS ---"
+echo "--- Now backing up to the DAS ---" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 HMDIR=/mnt/storage
 BKDIR_P=/tank1/personal
 BKDIR_M=/tank1/media
 
-rsync -aAXH "$HMDIR/Pictures/" "$BKDIR_P/Pictures/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Videos/" "$BKDIR_P/Videos/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Academics/" "$BKDIR_P/Academics/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Zotero/" "$BKDIR_P/Zotero/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Code/" "$BKDIR_P/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/TempStorage/DCIM/" "$BKDIR_P/TempStorage/DCIM/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/TempStorage/MobileSS/" "$BKDIR_P/TempStorage/MobileSS/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Programs/" "$BKDIR_P/Programs/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/dotfiles/" "$BKDIR_P/dotfiles/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Music/" "$BKDIR_M/Music/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
-rsync -aAXH "$HMDIR/Movies/" "$BKDIR_M/Movies/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Pictures/" "$BKDIR_P/Pictures/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Videos/" "$BKDIR_P/Videos/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR_P/Academics/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR_P/Zotero/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Code/" "$BKDIR_P/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/TempStorage/DCIM/" "$BKDIR_P/TempStorage/DCIM/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/TempStorage/MobileSS/" "$BKDIR_P/TempStorage/MobileSS/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/TempStorage/.cache/" "$BKDIR_M/TempStorage/.cache/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Programs/" "$BKDIR_P/Programs/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/dotfiles/" "$BKDIR_P/dotfiles/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Music/" "$BKDIR_M/Music/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Movies/" "$BKDIR_M/Movies/Main/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 
 echo $'\n'"--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
