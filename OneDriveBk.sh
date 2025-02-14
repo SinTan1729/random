@@ -19,16 +19,16 @@ set -e
 
 LOGFILE="/home/sintan/TempStorage/OneDriveBk.log"
 
-echo "Starting Backup" | tee -a $LOGFILE
-date | tee -a $LOGFILE
+echo "Starting Backup at $(date)" | tee -a $LOGFILE
+echo "-----------------------------"$'\n' | tee -a $LOGFILE
 
 rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Pictures" encrypted-onedrive:"Pictures" |& tee -a $LOGFILE
 
 rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Videos" encrypted-onedrive:"Videos" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Academics" encrypted-onedrive:"Academics" |& tee -a $LOGFILE
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/mnt/storage/Academics" encrypted-onedrive:"Academics" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Zotero" encrypted-onedrive:"Zotero" |& tee -a $LOGFILE
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/mnt/storage/Zotero" encrypted-onedrive:"Zotero" |& tee -a $LOGFILE
 
 rclone -v --fast-list --size-only --links --bwlimit 4M sync "/mnt/storage/Music" encrypted-onedrive:"Music" |& tee -a $LOGFILE
 
@@ -44,6 +44,6 @@ rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="**/.stfolders/
 rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="*-config/**" sync "/mnt/storage/Programs" \
     encrypted-onedrive:"Programs" |& tee -a $LOGFILE
 
-echo "-----------------------------" | tee -a $LOGFILE
+echo $'\n'"-----------------------------" | tee -a $LOGFILE
 echo "-----------------------------" | tee -a $LOGFILE
 
