@@ -67,7 +67,7 @@ echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Backing up Forgejo data..." | tee -a "$BKDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$HMDIR/Docker/forgejo/*-data" "$BKDIR/Programs/Docker/forgejo/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Docker/forgejo/forgejo-data" "$HMDIR/Docker/forgejo/postgres-data" "$BKDIR/Programs/Docker/forgejo-config/" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$BKDIR/TempStorage/impfilesbk.log"
