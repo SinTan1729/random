@@ -17,25 +17,33 @@ set -e
 
 # List of backups
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Pictures" encrypted-onedrive:"Pictures"
+LOGFILE="/home/sintan/TempStorage/OneDriveBk.log"
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Videos" encrypted-onedrive:"Videos"
+echo "Starting Backup" | tee -a $LOGFILE
+date | tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Academics" encrypted-onedrive:"Academics"
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Pictures" encrypted-onedrive:"Pictures" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Zotero" encrypted-onedrive:"Zotero"
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Videos" encrypted-onedrive:"Videos" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync "/mnt/storage/Music" encrypted-onedrive:"Music"
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Academics" encrypted-onedrive:"Academics" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M sync --exclude="**/.stversions/**" --exclude="/CalibreLibrary/**"\
-    "/mnt/storage/Documents" encrypted-onedrive:"Documents"
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/home/sintan/Zotero" encrypted-onedrive:"Zotero" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --exclude="**/menus/**" --exclude="**/unity3d/**"\
-    --exclude="**/libreoffice/**" --ignore-errors --bwlimit 4M sync "/mnt/storage/dotfiles" encrypted-onedrive:"dotfiles"
+rclone -v --fast-list --size-only --links --bwlimit 4M sync "/mnt/storage/Music" encrypted-onedrive:"Music" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="**/.stfolders/**"\
-    --exclude="**/.trashed**" --delete-excluded sync "/home/sintan/TempStorage/DCIM" encrypted-onedrive:"DCIM"
+rclone -v --fast-list --size-only --links --bwlimit 4M sync --exclude="**/.stversions/**" --exclude="/CalibreLibrary/**" \
+    "/mnt/storage/Documents" encrypted-onedrive:"Documents" |& tee -a $LOGFILE
 
-rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="*-config/**" sync "/mnt/storage/Programs"\
-    encrypted-onedrive:"Programs"
+rclone -v --fast-list --size-only --links --exclude="**/menus/**" --exclude="**/unity3d/**" \
+    --exclude="**/libreoffice/**" --ignore-errors --bwlimit 4M sync "/mnt/storage/dotfiles" encrypted-onedrive:"dotfiles" |& tee -a $LOGFILE
+
+rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="**/.stfolders/**" \
+    --exclude="**/.trashed**" --delete-excluded sync "/home/sintan/TempStorage/DCIM" encrypted-onedrive:"DCIM" |& tee -a $LOGFILE
+
+rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="*-config/**" sync "/mnt/storage/Programs" \
+    encrypted-onedrive:"Programs" |& tee -a $LOGFILE
+
+echo "-----------------------------" | tee -a $LOGFILE
+echo "-----------------------------" | tee -a $LOGFILE
 
