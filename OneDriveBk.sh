@@ -44,6 +44,9 @@ rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="**/.stfolders/
 rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="*-config/**" sync "/mnt/storage/Programs" \
     encrypted-onedrive:"Programs" |& tee -a $LOGFILE
 
+rclone -v --fast-list --size-only --links --bwlimit 4M --exclude="**/.git/**" --exclude="**/.venv/**" \
+    sync "/mnt/storage/Code" encrypted-onedrive:"Code" |& tee -a $LOGFILE
+
 echo $'\n'"-----------------------------" | tee -a $LOGFILE
 echo "-----------------------------" | tee -a $LOGFILE
 
