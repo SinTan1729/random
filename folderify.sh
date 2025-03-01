@@ -14,7 +14,7 @@ process_file () {
     else
         mkdir "$without_ext"
         mv "$filename" "$without_ext/"
-        find . -type f -regextype posix-egrep -iregex "\./$without_ext(\.[a-z]{2})?\.srt" \
+        find . -type f -regextype posix-egrep -iregex "\./$without_ext(\.[a-z]{2,3})?\.srt" \
             -exec mv "{}" "$without_ext/" \;
     fi
 }
