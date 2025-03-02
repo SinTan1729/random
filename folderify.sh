@@ -14,14 +14,14 @@ process_file () {
     else
         mkdir "$without_ext"
         mv "$filename" "$without_ext/"
-        find . -type f -regextype posix-egrep -iregex "\./$without_ext(\.[a-z]{2,3})?\.srt" \
+        find . -maxdepth 1 -type f -regextype posix-egrep -iregex "\./$without_ext(\.[a-z]{2,3})?\.srt" \
             -exec mv "{}" "$without_ext/" \;
     fi
 }
 
 counter=0
 
-find . -type f -regextype posix-egrep -iregex '.*\.(mkv|mp4)$' -print0 | while IFS= read -r -d '' file; do
+find . -maxdepth 1 -type f -regextype posix-egrep -iregex '.*\.(mkv|mp4)$' -print0 | while IFS= read -r -d '' file; do
     process_file
 done
 
