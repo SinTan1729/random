@@ -22,7 +22,8 @@ VERS="$2"
 echo "Updating AUR..."
 cd "$GITDIR/AUR"
 [ -d "$1" ] && PKG="$1" || PKG="$1-bin"
-if [ -d "$1" ]; then # Skip if the directory is missing
+
+if [ -d "$PKG" ]; then # Skip if the directory is missing
     cd "$PKG"
     sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
     updpkgsums
