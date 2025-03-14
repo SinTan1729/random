@@ -23,6 +23,6 @@ command -v dnf &> /dev/null && dnf list installed | awk '{print $1}' | tail -n +
 # list and save pip packages
 command -v pip &> /dev/null && pip list | awk '{print $1}' | tail -n +3 > $DIR/pip
 
-# list and save pipx packages
-command -v pipx &> /dev/null && pipx list | grep package | awk '{print $2}' > $DIR/pipx
+# list and save uv packages
+command -v uv &> /dev/null && uv tool list | grep -vE '^-.*' | awk '{print $1}' > $DIR/uv
 
