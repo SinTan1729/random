@@ -66,7 +66,7 @@ echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo $(date) "| Pulling pkglists_server from server..." | tee -a "$LGDIR/TempStorage/impfilesbk.log"
-rsync -aAXH --delete --stats "$BKDIR_HDD/Documents/Backup/pkglists_server/" "$HMDIR/Documents/Backup/pkglists_server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$BKDIR_HDD/Documents/Backup/pkglists/server/" "$HMDIR/Documents/Backup/pkglists/server/" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 echo $'\n'$(date) "| Done!" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
 
 echo "--------------------------------------------------" | tee -a "$LGDIR/TempStorage/impfilesbk.log"
