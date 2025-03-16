@@ -6,7 +6,7 @@
 # put this inside /etc/cron.daily
 
 # define location for output
-DIR=/mnt/storage/Documents/Backup/pkglists_server
+DIR=/mnt/storage/Documents/Backup/pkglists/server
 
 # make sure that the folder exists
 mkdir -p $DIR
