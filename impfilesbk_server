@@ -118,6 +118,7 @@ rsync -aAXH --delete --stats "$HMDIR/Pictures/" "$BKDIR_P/Pictures/" | tee -a "$
 rsync -aAXH --delete --stats "$HMDIR/Videos/" "$BKDIR_P/Videos/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Academics/" "$BKDIR_P/Academics/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Zotero/" "$BKDIR_P/Zotero/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
+rsync -aAXH --delete --stats "$HMDIR/Documents/" "$BKDIR_P/Documents/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/Code/" "$BKDIR_P/Code/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/TempStorage/DCIM/" "$BKDIR_P/TempStorage/DCIM/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
 rsync -aAXH --delete --stats "$HMDIR/TempStorage/MobileSS/" "$BKDIR_P/TempStorage/MobileSS/" | tee -a "$HMDIR/TempStorage/impfilesbk.log"
