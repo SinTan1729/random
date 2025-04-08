@@ -10,66 +10,65 @@ import subprocess
 import time
 
 # Check if the build script exists
-if not os.path.isfile('lure.sh'):
+if not os.path.isfile("lure.sh"):
     print("Couldn't find a lure.sh file in the current directory.")
     exit(1)
 
-with open('lure.sh', 'r') as script_file:
+with open("lure.sh", "r") as script_file:
     script = script_file.readlines()
 
 vars = {}
 for line in script:
-    if '=' not in line or '\t' in line:
+    if "=" not in line or "\t" in line:
         continue
-    var, val = line.strip('\n').split('=')
+    var, val = line.strip("\n").split("=")
     vars[var] = val.strip('""').strip("''")
 
 for src_type in [k for k in vars.keys() if "sources" in k]:
-    suffix = src_type.split('_')[1]
+    suffix = src_type.split("_")[1]
     if suffix != "":
-        suffix = "_"+suffix
+        suffix = "_" + suffix
 
     # Read all the links
-    links = [link.strip('""').strip("''")
-             for link in vars[src_type].strip('()').split()]
+    links = [link.strip('""').strip("''") for link in vars[src_type].strip("()").split()]
 
     # Get the old sums
-    old_sums = vars["checksums"+suffix].strip('()').split()
+    old_sums = vars["checksums" + suffix].strip("()").split()
     old_sums = [sum.strip('""').strip("''") for sum in old_sums]
 
     checksums = []
     for i, link in enumerate(links):
-        if old_sums[i] == 'SKIP':
-            checksums.append('SKIP')
+        if old_sums[i] == "SKIP":
+            checksums.append("SKIP")
             continue
         # Try to do variable expansions (works up to one level, should be enough)
-        to_replace = list(set(re.findall('(\${.+?})', link)))
+        to_replace = list(set(re.findall("(${.+?})", link)))
         for str in to_replace:
-            str_clean = str.strip('${}')
+            str_clean = str.strip("${}")
             link = link.replace(str, vars[str_clean])
 
         filename = subprocess.run(
-            ['curl', '-sLO', '-w', '%{filename_effective}', link], stdout=subprocess.PIPE)
-        filename = filename.stdout.decode('utf-8')
+            ["curl", "-sLO", "-w", "%{filename_effective}", link], stdout=subprocess.PIPE
+        )
+        filename = filename.stdout.decode("utf-8")
 
-        checksum = subprocess.run(
-            ['sha256sum', filename], stdout=subprocess.PIPE)
-        checksum = checksum.stdout.decode('utf-8').split()[0]
+        checksum = subprocess.run(["sha256sum", filename], stdout=subprocess.PIPE)
+        checksum = checksum.stdout.decode("utf-8").split()[0]
         checksums.append(checksum)
 
     # Build the output line
-    sum_out = "checksums"+suffix+"=('"+"' '".join(checksums)+"')\n"
+    sum_out = "checksums" + suffix + "=('" + "' '".join(checksums) + "')\n"
     for i, line in enumerate(script):
-        if "checksums"+suffix in line:
+        if "checksums" + suffix in line:
             script[i] = sum_out
-            print("Updated checksums for "+suffix[1:]+" sources")
+            print("Updated checksums for " + suffix[1:] + " sources")
 
 timestamp = "{}".format(int(time.time()))
 
-with open(timestamp, 'w') as tempfile:
+with open(timestamp, "w") as tempfile:
     tempfile.writelines(script)
 
-os.rename('lure.sh', "lure-"+timestamp+".sh")
-os.rename(timestamp, 'lure.sh')
+os.rename("lure.sh", "lure-" + timestamp + ".sh")
+os.rename(timestamp, "lure.sh")
 
 print("Done!")
