@@ -20,8 +20,8 @@ set -e
 
 # Setup location for home and backup directory
 HMDIR="/home/sintan"
-BKDIR_SSD="server-rsync:/home/sintan"
-BKDIR_HDD="server-rsync:/mnt/storage"
+BKDIR_SSD="server-ts-rsync:/home/sintan"
+BKDIR_HDD="server-ts-rsync:/mnt/storage"
 mkdir -p "/home/sintan/TempStorage/impfilesbk-logs/"
 LGFILE="/home/sintan/TempStorage/impfilesbk-logs/$(date -Idate).log"
 
