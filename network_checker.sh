@@ -10,7 +10,7 @@ if ping -qc1 192.168.0.1 >/dev/null; then
     echo "$(date): We up!" >> "$LOG_FILE"
     rm -f "$DELAY_FILE"
 else
-    echo "$(date): We down!"
+    echo "$(date): We down!" >> "$LOG_FILE"
     if [ -f "$DELAY_FILE" ]; then
         ITER="$(cat "$DELAY_FILE")"
         echo "$(( ITER + 1 ))" > "$DELAY_FILE"
