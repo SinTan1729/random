@@ -42,11 +42,10 @@ for src_type in [k for k in vars.keys() if "sources" in k]:
             checksums.append("SKIP")
             continue
         # Try to do variable expansions (works up to one level, should be enough)
-        to_replace = list(set(re.findall("(${.+?})", link)))
+        to_replace = list(set(re.findall(r"\$\{\w+\}", link)))
         for str in to_replace:
             str_clean = str.strip("${}")
             link = link.replace(str, vars[str_clean])
-
         filename = subprocess.run(
             ["curl", "-sLO", "-w", "%{filename_effective}", link], stdout=subprocess.PIPE
         )
