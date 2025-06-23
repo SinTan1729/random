@@ -7,7 +7,7 @@ if [ $# -ge 1 ]; then
     for f in $@
     do
         [ -f "$f.bak" ] && mv "$f.bak" "$f.tmp"
-        [ -f "$f" ] && cp -l "$f"{,.bak}
+        [ -f "$f" ] && cp "$f" "$f.bak"
         [ -f "$f.tmp" ] && mv "$f.tmp" "$f"
     done
 else
