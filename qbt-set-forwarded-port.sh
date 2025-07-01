@@ -6,7 +6,7 @@
 
 qbt_username="${QBT_USERNAME:-sintan}"
 qbt_password="${QBT_PASSWORD:-default_pass}"
-qbt_addr="${QBT_ADDR:-http://localhost:8085}" # ex. http://10.0.1.48:8080
+qbt_addr="${QBT_ADDR:-http://localhost:81085}" # ex. http://10.0.1.48:8080
 
 port_number="$1"
 if [ -z "$port_number" ]; then
@@ -18,17 +18,17 @@ if [ -z "$port_number" ]; then
     exit 1
 fi
 
-j=1
-while [ $j -le 10 ]; do
+wait_time=1
+while [ $wait_time -le 512 ]; do
     wget --save-cookies=/tmp/cookies.txt --keep-session-cookies --header="Referer: $qbt_addr" --header="Content-Type: application/x-www-form-urlencoded" \
       --post-data="username=$qbt_username&password=$qbt_password" --output-document /dev/null --quiet "$qbt_addr/api/v2/auth/login"
 
     listen_port=$(wget --load-cookies=/tmp/cookies.txt --output-document - --quiet "$qbt_addr/api/v2/app/preferences" | grep -Eo '"listen_port":[0-9]+' | awk -F: '{print $2}')
 
     if [ ! "$listen_port" ]; then
-        echo "Could not get current listen port, trying again after $(( j*5 )) seconds..."
-        sleep $(( j*5 ))
-        j=$(( j+1 ))
+        echo "Could not get current listen port, trying again after $wait_time seconds..."
+        sleep $wait_time
+        wait_time=$(( wait_time*2 ))
         continue
     fi
 
