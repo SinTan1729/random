@@ -31,7 +31,8 @@ while [ $wait_time -le 512 ]; do
     listen_port=$(wget --load-cookies=/tmp/cookies.txt --output-document - --quiet "$qbt_addr/api/v2/app/preferences" | grep -Eo '"listen_port":[0-9]+' | awk -F: '{print $2}')
 
     if [ ! "$listen_port" ]; then
-        echo "Could not get current listen port, trying again after $wait_time second(s)..."
+        [ $wait_time -eq 1 ] && second_word="second" || second_word="seconds"
+        echo "Could not get current listen port, trying again after $wait_time $second_word..."
         sleep $wait_time
         wait_time=$(( wait_time*2 ))
         continue
