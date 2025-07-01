@@ -5,8 +5,13 @@
 # set -e
 
 qbt_username="${QBT_USERNAME:-sintan}"
-qbt_password="${QBT_PASSWORD:-default_pass}"
-qbt_addr="${QBT_ADDR:-http://localhost:81085}" # ex. http://10.0.1.48:8080
+qbt_password="${QBT_PASSWORD}"
+qbt_addr="${QBT_ADDR:-http://localhost:8085}"
+
+if [ -z ${qbt_password} ]; then
+    echo "You need to provide a password by the QBT_PASSWORD env variable"
+    exit 1
+fi
 
 port_number="$1"
 if [ -z "$port_number" ]; then
@@ -47,4 +52,4 @@ while [ $wait_time -le 512 ]; do
 done
 
 echo "Failed after 10 attempts!"
-exit 1
+exit 2
