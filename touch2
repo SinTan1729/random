@@ -3,8 +3,9 @@
 # It makes the parent folders (if needed) while touch-ing.
 
 if [ $# -ge 1 ]; then
-    for f in $@
+    for f in "$@"
     do
+        echo "$f"
         mkdir -p "$(dirname "$f")"
         touch "$f"
     done
