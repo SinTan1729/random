@@ -20,7 +20,7 @@ fi
 
 for i in "${@:2}"; do
     if [ "$i" == "personal_script_dir" ]; then
-        dest="/home/sintan/.local/bin/personal/"
+        dest="$HOME/.local/bin/personal/"
         echo Copying to "$dest"...
         cp "$1" "$dest"
         echo Making it executable...
