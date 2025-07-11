@@ -39,8 +39,8 @@ fi
 
 # Update the GitHub backup repo as well
 echo "Updating AUR backup repo..."
+cp PKGBUILD "$GITDIR/AUR Mirror GitHub/$PKG/"
 cd "$GITDIR/AUR Mirror GitHub/$PKG"
-sed -i -E "s/pkgver=[0-9\.]+/pkgver=$VERS/" PKGBUILD
 git add .
 git commit -m "Bumped $PKG version to $VERS"
 git push
