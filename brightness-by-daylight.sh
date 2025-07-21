@@ -68,5 +68,6 @@ fi
 
 # do the brightness adjustment using ddcutil
 [ $sun_status == "DAY" ] && target=$high || target=$low
-ddcutil setvcp 10 $target
+qdbus6 org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl \
+    org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness $(( $target * 100 ))
 echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
