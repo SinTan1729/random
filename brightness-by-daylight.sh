@@ -36,6 +36,13 @@ else
     exit
 fi
 
+# Only continue when a single external monitor is being useed
+screen_count="$(kscreen-doctor -j | grep '"enabled": true' | wc -l)"
+laptop_screen="$(kscreen-doctor -j | jq '.outputs[] | select(.name=="eDP-1") | .enabled')"
+if ! [[ "$screen_count" == "1" && "$laptop_screen" == "false" ]]; then
+    echo "Either the laptop screen is being used, or more than one displays are connected. Exiting."
+fi
+
 # get sun status
 sun_status=$(sunwait poll $latitude $longitude)
 
