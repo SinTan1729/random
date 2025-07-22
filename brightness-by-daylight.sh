@@ -71,3 +71,4 @@ fi
 qdbus6 org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl \
     org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness $(( $target * 100 ))
 echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
+DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -i brightness -a "Brightness by Daylight" "Brightness was set to $target%."
