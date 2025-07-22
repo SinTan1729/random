@@ -18,10 +18,12 @@
 # just run this script one manually to set it up to run perpetually (hopefully) using 'at'
 # (some distros don't come with 'at' preinstalled, so you might need to install 'at' and enable the 'atd' service.)
 
-# it might also be a good idea to add '<location-of-this-script> scheduler' to your DE's autostart list, or to '.profile' so that it launches on system login
+# it might also be a good idea to add '<location-of-this-script> scheduler' to your DE's autostart list, or to '.profile' 
+# so that it launches on system login
+# If it's not working from a crontab or login script, try passing `DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u)` to it.
 # (sometimes I forget to turn on the monitor when I start my PC, so this is better than having a crontab)
-
 # avoid running two concurrent processes
+
 [ "${BRTNESSLOCKER}" != "running" ] && exec env BRTNESSLOCKER="running" flock -en "/tmp/brightness-by-daylight.lock" "$0" "$@" || :
 
 # set location of the config file
@@ -33,14 +35,14 @@ if [ -f $confdir/brightness-by-daylight.conf ]; then
 else
     echo "No config file found!"
     echo "It should be located at [config-dir]/brightness-by-daylight.conf"
-    exit
+    exit 1
 fi
-
 # Only continue when a single external monitor is being useed
 screen_count="$(kscreen-doctor -j | grep '"enabled": true' | wc -l)"
 laptop_screen="$(kscreen-doctor -j | jq '.outputs[] | select(.name=="eDP-1") | .enabled')"
 if ! [[ "$screen_count" == "1" && "$laptop_screen" == "false" ]]; then
     echo "Either the laptop screen is being used, or more than one displays are connected. Exiting."
+    exit 2
 fi
 
 # get sun status
@@ -72,11 +74,10 @@ if [ "$1" == "scheduler" ]; then
     # create the schedule
     $flag && at -m $time_next <<<"$scriptdir/brightness-by-daylight.sh scheduler"
 fi
-
 # do the brightness adjustment using ddcutil
 [ $sun_status == "DAY" ] && target=$high || target=$low
 qdbus6 org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl \
     org.kde.Solid.PowerManagement.Actions.BrightnessControl.setBrightness $(( $target * 100 ))
 echo "Monitor brightness set to $target%, since it's $(echo $sun_status | tr '[:upper:]' '[:lower:]') time"
-DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -h "string:desktop-entry:kcm_powerdevilprofilesconfig" \
+notify-send -h "string:desktop-entry:kcm_powerdevilprofilesconfig" \
     -i brightness -a "Brightness by Daylight" "Brightness was set to $target%."
