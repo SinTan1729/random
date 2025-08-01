@@ -24,7 +24,8 @@ if [ -z "$port_number" ]; then
 fi
 
 wait_time=1
-while [ $wait_time -le 512 ]; do
+tries=0
+while [ $tries -lt 10 ]; do
     wget --save-cookies=/tmp/cookies.txt --keep-session-cookies --header="Referer: $qbt_addr" --header="Content-Type: application/x-www-form-urlencoded" \
       --post-data="username=$qbt_username&password=$qbt_password" --output-document /dev/null --quiet "$qbt_addr/api/v2/auth/login"
 
@@ -34,7 +35,8 @@ while [ $wait_time -le 512 ]; do
         [ $wait_time -eq 1 ] && second_word="second" || second_word="seconds"
         echo "Could not get current listen port, trying again after $wait_time $second_word..."
         sleep $wait_time
-        wait_time=$(( wait_time*2 ))
+        [ $wait_time -lt 32 ] && wait_time=$(( wait_time*2 )) # Set a max wait time of 32 secs
+        tries=$(( tries+1 ))
         continue
     fi
 
